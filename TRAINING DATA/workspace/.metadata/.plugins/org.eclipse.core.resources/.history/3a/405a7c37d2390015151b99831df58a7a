@@ -1,0 +1,15 @@
+package javatest;
+
+public class TestApp {
+
+	public static void main(String[] args) {
+		
+		
+		Customer c1=new DatacardCustomer(1, "A");
+		c1.displayDetails();
+		Customer c2=new WirelessCustomer();
+		c2.displayDetails();
+
+	}
+
+}

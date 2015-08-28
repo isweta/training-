@@ -1,0 +1,39 @@
+class Account implements AcctTransfer{
+
+
+boolean transferAmount(int fromAccNo, int toAccNo, int amt){
+
+}
+}
+
+AcctTransfer acct=getAccount();
+
+
+
+
+
+AcctTransfer getAccount(){
+	return new AccountProxy();
+}
+
+
+//by seerver
+
+interface AcctTransfer{
+boolean transferAmount(int fromAccNo, int toAccNo, int amt);
+}
+
+class AccountProxy implememts AcctTransfer{
+boolean transferAmount(int fromAccNo, int toAccNo, int amt){
+	beginTransaction();
+	try{
+		new Account().transferAmount(........);
+		commit;
+	}catch(Exception e){
+		rollback;
+	}
+}
+
+
+}
+

@@ -1,0 +1,19 @@
+
+public class TestDAO {
+
+	public static void main(String[] args) {
+		testInsert();
+
+	}
+	
+	public static void testInsert(){
+		DAOHarryPotterCharacters dhp=new DAOHarryPotterCharacters();
+		HpCharacter newChar=new HpCharacter("Albus Severus","Gryffindor", "Student","Family", "No");
+		int insertStatus=dhp.insert(newChar);
+		if(insertStatus==0)
+			System.out.println("Record not inserted");
+		else
+			System.out.println("Record inserted Succesfully");
+	}
+
+}

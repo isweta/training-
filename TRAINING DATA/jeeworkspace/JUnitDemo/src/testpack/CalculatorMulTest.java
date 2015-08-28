@@ -1,0 +1,45 @@
+package testpack;
+
+import static org.junit.Assert.assertEquals;
+import mypack.Calculator;
+
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+
+public class CalculatorMulTest {
+	Calculator c;
+
+	@Before
+	public void initEnv() {
+
+		System.out.println("Creating Test Environment");
+		c = new Calculator();
+	}
+
+	@After
+	public void closeEnv() {
+		System.out.println("Cleaning Test Environment");
+	}
+
+	@Test
+	public void UTC_01() {
+		int input1 = 2;
+		int input2 = 3;
+		int expected = 6;
+
+		int actual = c.mul(input1, input2);
+		assertEquals(expected, actual);
+	}
+
+	@Test
+	public void testUTC_02() {
+		int input1 = -2;
+		int input2 = -2;
+		int expected = 4;
+
+		int actual = c.mul(input1, input2);
+		assertEquals(expected, actual);
+	}
+
+}

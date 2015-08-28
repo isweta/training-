@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename resource &apos;AJAXDemo/WebContent/JSONtest.JSON&apos; to &apos;JSONtest.json&apos;" description="Rename resource &apos;JSONtest.JSON&apos;" flags="7" id="org.eclipse.ltk.core.refactoring.rename.resource" input="WebContent/JSONtest.JSON" name="JSONtest.json" stamp="1439807051713" updateReferences="true"/>
+</session>

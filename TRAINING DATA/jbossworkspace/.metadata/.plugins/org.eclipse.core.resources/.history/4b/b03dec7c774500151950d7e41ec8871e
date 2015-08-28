@@ -1,0 +1,5 @@
+package bank;
+@Remote
+public interface CreditRemote {
+	String check(String cardno);
+}

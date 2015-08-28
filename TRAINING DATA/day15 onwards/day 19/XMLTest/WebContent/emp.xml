@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ns1:employee
+    xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'
+    xmlns:ns1='http://xml.netbeans.org/schema/emp'
+    xsi:schemaLocation='http://xml.netbeans.org/schema/emp emp.xsd'>
+    <name>chandra</name>
+    <id>6</id>
+    <salary>10000</salary>
+
+</ns1:employee> 

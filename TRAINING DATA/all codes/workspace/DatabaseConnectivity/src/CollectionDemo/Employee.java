@@ -1,0 +1,64 @@
+package CollectionDemo;
+
+public class Employee {
+	private int empid;
+	int age;
+	int salary;
+	public int getEmpid() {
+		return empid;
+	}
+	public void setEmpid(int empid) {
+		this.empid = empid;
+	}
+	public int getAge() {
+		return age;
+	}
+	public void setAge(int age) {
+		this.age = age;
+	}
+	public int getSalary() {
+		return salary;
+	}
+	public void setSalary(int salary) {
+		this.salary = salary;
+	}
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + age;
+		result = prime * result + empid;
+		result = prime * result + salary;
+		return result;
+	}
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Employee other = (Employee) obj;
+		if (age != other.age)
+			return false;
+		if (empid != other.empid)
+			return false;
+		if (salary != other.salary)
+			return false;
+		return true;
+	}
+	@Override
+	public String toString() {
+		return "Employee [empid=" + empid + ", age=" + age + ", salary="
+				+ salary + "]";
+	}
+	public Employee(int empid, int age, int salary) {
+		super();
+		this.empid = empid;
+		this.age = age;
+		this.salary = salary;
+	}
+	
+
+}

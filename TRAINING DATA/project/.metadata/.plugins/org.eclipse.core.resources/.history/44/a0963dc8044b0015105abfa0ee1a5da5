@@ -1,0 +1,144 @@
+
+public class Order {
+	int customerId;
+	int orderId;
+	String orderStatus;
+	String orderDueDate;
+	int serviceAddressId;
+	int serviceId;
+	String orderType;
+	
+	public Order(){
+		
+	}
+
+	public Order(int customerId, int orderId, String orderStatus,
+			String orderDueDate, int serviceAddressId, int serviceId,
+			String orderType) {
+		super();
+		this.customerId = customerId;
+		this.orderId = orderId;
+		this.orderStatus = orderStatus;
+		this.orderDueDate = orderDueDate;
+		this.serviceAddressId = serviceAddressId;
+		this.serviceId = serviceId;
+		this.orderType = orderType;
+	}
+
+	@Override
+	public String toString() {
+		return "Order [customerId=" + customerId + ", orderId=" + orderId
+				+ ", orderStatus=" + orderStatus + ", orderDueDate="
+				+ orderDueDate + ", serviceAddressId=" + serviceAddressId
+				+ ", serviceId=" + serviceId + ", orderType=" + orderType + "]";
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + customerId;
+		result = prime * result
+				+ ((orderDueDate == null) ? 0 : orderDueDate.hashCode());
+		result = prime * result + orderId;
+		result = prime * result
+				+ ((orderStatus == null) ? 0 : orderStatus.hashCode());
+		result = prime * result
+				+ ((orderType == null) ? 0 : orderType.hashCode());
+		result = prime * result + serviceAddressId;
+		result = prime * result + serviceId;
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Order other = (Order) obj;
+		if (customerId != other.customerId)
+			return false;
+		if (orderDueDate == null) {
+			if (other.orderDueDate != null)
+				return false;
+		} else if (!orderDueDate.equals(other.orderDueDate))
+			return false;
+		if (orderId != other.orderId)
+			return false;
+		if (orderStatus == null) {
+			if (other.orderStatus != null)
+				return false;
+		} else if (!orderStatus.equals(other.orderStatus))
+			return false;
+		if (orderType == null) {
+			if (other.orderType != null)
+				return false;
+		} else if (!orderType.equals(other.orderType))
+			return false;
+		if (serviceAddressId != other.serviceAddressId)
+			return false;
+		if (serviceId != other.serviceId)
+			return false;
+		return true;
+	}
+
+	public int getCustomerId() {
+		return customerId;
+	}
+
+	public void setCustomerId(int customerId) {
+		this.customerId = customerId;
+	}
+
+	public int getOrderId() {
+		return orderId;
+	}
+
+	public void setOrderId(int orderId) {
+		this.orderId = orderId;
+	}
+
+	public String getOrderStatus() {
+		return orderStatus;
+	}
+
+	public void setOrderStatus(String orderStatus) {
+		this.orderStatus = orderStatus;
+	}
+
+	public String getOrderDueDate() {
+		return orderDueDate;
+	}
+
+	public void setOrderDueDate(String orderDueDate) {
+		this.orderDueDate = orderDueDate;
+	}
+
+	public int getServiceAddressId() {
+		return serviceAddressId;
+	}
+
+	public void setServiceAddressId(int serviceAddressId) {
+		this.serviceAddressId = serviceAddressId;
+	}
+
+	public int getServiceId() {
+		return serviceId;
+	}
+
+	public void setServiceId(int serviceId) {
+		this.serviceId = serviceId;
+	}
+
+	public String getOrderType() {
+		return orderType;
+	}
+
+	public void setOrderType(String orderType) {
+		this.orderType = orderType;
+	}
+
+}

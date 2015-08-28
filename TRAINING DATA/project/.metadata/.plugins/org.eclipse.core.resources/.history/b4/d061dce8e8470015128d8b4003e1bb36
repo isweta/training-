@@ -1,0 +1,7 @@
+
+public interface DAOOrder {
+	public Order getOrderDetails(String orderId);
+
+	String getServiceId(String orderId);
+
+}

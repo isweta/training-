@@ -1,0 +1,7 @@
+package dao.source;
+
+public class Customer {
+	int customerId;
+	
+
+}

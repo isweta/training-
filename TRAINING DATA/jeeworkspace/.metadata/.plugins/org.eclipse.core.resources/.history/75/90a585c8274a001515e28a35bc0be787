@@ -1,0 +1,48 @@
+
+
+import java.io.IOException;
+
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+/**
+ * Servlet implementation class CheckBillServlet
+ */
+public class CheckBillServlet extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+       
+    /**
+     * @see HttpServlet#HttpServlet()
+     */
+    public CheckBillServlet() {
+        super();
+        // TODO Auto-generated constructor stub
+    }
+
+	/**
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+	}
+
+	/**
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		String connNo=request.getParameter("connNo");
+		//from database get amountdue and payment date
+		
+		int amountdue=1000;
+		String paymentDate="20 Aug 2015";
+		request.setAttribute("connNo", connNo);
+		request.setAttribute("amtdue", amountdue);
+		request.setAttribute("paydate", paymentDate);
+		RequestDispatcher rd=request.getRequestDispatcher("checkBill.jsp");
+		rd.forward(request,response);
+	}
+
+}

@@ -1,0 +1,242 @@
+--------------exceptions q1---------------
+package day4;
+
+public class BankApp {
+	public static void main(String[] args) {
+		BankAccount bk = new BankAccount();
+		bk.depositMoney(5000.0);
+		System.out.println("original balance:" + bk.checkBalance());
+
+		bk.withdrawMoney(6000.0);
+		System.out.println("balance after trying to withdraw 6000 :"
+				+ bk.checkBalance());
+		bk.withdrawMoney(200);
+		System.out.println("balance after trying to withdraw 200 :"
+				+ bk.checkBalance());
+		bk.withdrawMoney(-5);
+		System.out.println("balance after trying to withdraw -5 :"
+				+ bk.checkBalance());
+		
+		System.out.println(bk.checkBalance());
+	}
+}
+
+class BankAccount {
+
+	double balance;
+
+	public void depositMoney(double depositAmount) {
+		balance += depositAmount;
+	}
+
+	public void withdrawMoney(double withdrawAmount) {
+		try {
+			if (balance < withdrawAmount)
+				throw new InsufficientBalanceException();
+			if (withdrawAmount < 0)
+				throw new NegativeAmountException();// no need to handle
+													// unchecked exception, but will terminate app
+			balance -= withdrawAmount;
+		} catch (InsufficientBalanceException e) {
+			System.out.println(e.getMessage());
+		} 
+
+	}
+
+	public double checkBalance() {
+		return balance;
+	}
+
+}
+
+// checked
+class InsufficientBalanceException extends Exception {
+
+	public InsufficientBalanceException() {
+		super("Withdrawal failed: Insufficient Balance in Account");
+	}
+}
+
+// unchecked
+class NegativeAmountException extends RuntimeException {
+	public NegativeAmountException() {
+		super("Amount entered less than zero");
+	}
+}
+
+-------------exception q2---------------------------
+package day4;
+
+public class ThreeExceptions {
+
+	public static void main(String[] args) {
+		try {
+			throwException();
+			throw new ArrayIndexOutOfBoundsException(
+					"Array Index Out Of Bounds ");
+
+		} catch (Exception1 | Exception2 | Exception3 e) {
+			System.out.println(e.getMessage());
+
+		} catch (ArrayIndexOutOfBoundsException e) {
+			System.out.println(e.getMessage());
+		}
+
+	}
+
+	public static void throwException() throws Exception1, Exception2,
+			Exception3 {
+
+		throw new Exception2();
+	}
+}
+
+class Exception1 extends Exception {
+	public Exception1() {
+		super("Throws Exception 1");
+	}
+
+}
+
+class Exception2 extends Exception {
+	public Exception2() {
+		super("Throws Exception 2");
+	}
+
+}
+
+class Exception3 extends Exception {
+	public Exception3() {
+		super("Throws Exception 3");
+	}
+
+}
+
+-----------------collections q1--------------------
+package day4;
+
+import java.util.Iterator;
+import java.util.List;
+import java.util.Vector;
+
+public class TestClass {
+	public static void main(String[] args) {
+		ListOfNumbers l1 = new ListOfNumbers();
+		l1.writeList();
+	}
+}
+
+class ListOfNumbers {
+
+	List<Integer> list;
+
+	public ListOfNumbers() {
+		list = new Vector<Integer>();
+		for (int i = 0; i < 10; i++) {
+			list.add(i);
+		}
+
+	}
+
+	public void writeList() {
+		Iterator<Integer> it = list.iterator();
+		System.out.println();
+		while (it.hasNext()) {
+			System.out.print(it.next() + " ");
+		}
+	}
+
+}
+
+
+------------------collections q2---------------
+package day4;
+
+import java.util.List;
+import java.util.Vector;
+
+public class VecAdd {
+
+	public static void main(String[] args) {
+		List<Integer> v = new Vector<Integer>();
+		v.add(5);
+		v.add(6);
+		v.add(1);
+		v.add(4);
+		v.add(3);
+		populate(v);
+		System.out.println(v);
+
+	}
+
+	public static void populate(List<Integer> v) {
+		v.add(1, 23);
+		v.add(4, 36);
+
+	}
+
+}
+
+------------------collections q3-------------
+package day4;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class addAll {
+	public static void main(String[] args) {
+		List<Integer> l1 = new ArrayList<Integer>();
+		l1.add(5);
+		l1.add(6);
+		l1.add(1);
+		l1.add(4);
+		l1.add(3);
+		List<Integer> l2 = new ArrayList<Integer>();
+		l2.addAll(l1);
+		System.out.println(l2);
+
+	}
+
+}
+
+-------------collections q4--------------
+package day4;
+
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Scanner;
+
+public class UserDefColl {
+
+	public static void main(String[] args) {
+		List<MyClass> list = new ArrayList<MyClass>();
+		Scanner s = new Scanner(System.in);
+		for (int i = 1; i <= 5; i++) {
+			System.out.println("Student " + i + ": Enter id, name -");
+			list.add(new MyClass(s.nextInt(), s.next()));
+
+		}
+
+		display(list);
+	}
+
+	public static void display(List<MyClass> list) {
+		Iterator<MyClass> it = list.iterator();
+		while (it.hasNext()) {
+			MyClass temp = it.next();
+			System.out.println("Id: " + temp.id + " Name: " + temp.name);
+		}
+	}
+
+}
+
+class MyClass {
+	int id;
+	String name;
+
+	MyClass(int id, String name) {
+		this.id = id;
+		this.name = name;
+	}
+}

@@ -1,0 +1,257 @@
+---------------5-1----ques1----------------------
+package day5;
+
+public class ThreeCounters {
+
+	public static void main(String[] args) {
+		Counter c1 = new Counter();
+		Counter c2 = new Counter();
+		Counter c3 = new Counter();
+		Thread t1 = new Thread(new ThreadInc5(c1), "Inc5");
+		Thread t2 = new Thread(new ThreadInc10(c2), "Inc10");
+		Thread t3 = new Thread(new ThreadInc100(c3), "Inc100");
+		t1.setPriority(Thread.MIN_PRIORITY);
+		t2.setPriority(Thread.NORM_PRIORITY);
+		t3.setPriority(Thread.MAX_PRIORITY);
+		t1.start();
+		t2.start();
+		t3.start();
+
+	}
+
+}
+
+class ThreadInc5 implements Runnable {
+
+	Counter counterObj;
+
+	public ThreadInc5(Counter counterObj) {
+		this.counterObj = counterObj;
+	}
+
+	@Override
+	public void run() {
+		while (counterObj.value < 1000)
+			counterObj.inc(5);
+	}
+
+}
+
+class ThreadInc10 implements Runnable {
+
+	Counter counterObj;
+
+	public ThreadInc10(Counter counterObj) {
+		this.counterObj = counterObj;
+	}
+
+	@Override
+	public void run() {
+		while (counterObj.value < 1000)
+			counterObj.inc(10);
+	}
+
+}
+
+class ThreadInc100 implements Runnable {
+
+	Counter counterObj;
+
+	public ThreadInc100(Counter counterObj) {
+		this.counterObj = counterObj;
+	}
+
+	@Override
+	public void run() {
+		while (counterObj.value < 1000)
+			counterObj.inc(100);
+	}
+
+}
+
+class Counter {
+	int value;
+
+	public void inc(int inc) {
+		System.out.println(Thread.currentThread().getName() + "  " + value);
+		this.value += inc;
+	}
+
+}
+
+
+------------5-1--ques2---------------------------------
+package day5;
+
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+
+public class FileReadingApp {
+
+	public static void main(String[] args) {
+
+		File f1 = new File("C:\\Users\\admin\\workspace\\MySample\\src\\day5\\"
+				+ args[0]);
+
+		File f2 = new File("C:\\Users\\admin\\workspace\\MySample\\src\\day5\\"
+				+ args[1]);
+		Thread t1 = new Thread(new ReaderThread(f1), "File1");
+		Thread t2 = new Thread(new ReaderThread(f2), "File2");
+		t1.start();
+		t2.start();
+	}
+
+}
+
+class ReaderThread implements Runnable {
+
+	File file;
+
+	public ReaderThread(File file) {
+		this.file = file;
+	}
+	
+	@Override
+	public void run() {
+
+		try {
+			BufferedReader buff = new BufferedReader(new FileReader(file));
+			String thisLine = buff.readLine();
+			while (thisLine != null) {
+
+				System.out.println(Thread.currentThread().getName() + " : "
+						+ thisLine);
+				Thread.sleep((int) Math.random() * 1000);
+				thisLine = buff.readLine();
+			}
+
+			buff.close();
+		} catch (FileNotFoundException e) {
+			System.out.println("No such File");
+
+		} catch (IOException e) {
+			System.out.println("Difficulty Reading");
+		} catch (InterruptedException e) {
+		}
+
+	}
+
+}
+----------5-1---ques 3----------------------------
+package day5;
+
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+
+public class FactorialCalcTest {
+	public static void main(String[] args) {
+		FactorialCalc factCalc = new FactorialCalc();
+		Thread t1 = new Thread(new InputGetterThread(factCalc), "Reader");
+		Thread t2 = new Thread(new FactCalcThread(factCalc), "Calculator");
+		t1.start();
+		t2.start();
+	}
+
+}
+
+class FactorialCalc {
+	int num;
+	private boolean available = false;
+
+	public synchronized int getNum() {
+		while (available == false) {
+			try {
+				wait();
+			} catch (InterruptedException e) {
+
+				e.printStackTrace();
+			}
+
+		}
+		available = false;
+		notify();
+		return num;
+	}
+
+	public synchronized void setNum(int num) {
+		this.num = num;
+		while (available == true) {
+			try {
+				wait();
+			} catch (InterruptedException e) {
+
+				e.printStackTrace();
+			}
+
+		}
+		available = true;
+		this.num=num;
+		notify();
+
+	}
+
+}
+
+class InputGetterThread implements Runnable {
+	FactorialCalc factCalc;
+
+	public InputGetterThread(FactorialCalc factCalc) {
+		this.factCalc = factCalc;
+	}
+
+	@Override
+	public void run() {
+		BufferedReader in;
+		try {
+			in = new BufferedReader(
+					new FileReader(
+							new File(
+									"C:\\Users\\admin\\workspace\\MySample\\src\\day5\\Numbers.txt")));
+			for(int i=1; i<=5; i++) {
+				int num = Integer.parseInt(in.readLine());
+				factCalc.setNum(num);
+				
+				
+			}
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (NumberFormatException e) {
+
+			e.printStackTrace();
+		} catch (IOException e) {
+
+			e.printStackTrace();
+		}
+
+	}
+
+}
+
+class FactCalcThread implements Runnable {
+	FactorialCalc factCalc;
+
+	public FactCalcThread(FactorialCalc factCalc) {
+		this.factCalc = factCalc;
+	}
+
+	@Override
+	public void run() {
+		for(int numi=1; numi<=5; numi++){
+			int num = factCalc.getNum();
+			long ans = 1;
+			for (int i = 1; i <= num; i++) {
+				ans *= i;
+			}
+			System.out.println("Factorial of " + num + " is : " + ans);
+		}
+		
+	}
+
+}
+

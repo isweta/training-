@@ -1,0 +1,59 @@
+create table country
+(cid number primary key,
+name varchar2(10));
+
+
+insert into country
+values
+(1,'India');
+
+insert into country
+values
+(2,'England');
+
+insert into country
+values
+(3, 'USA');
+
+create table states
+(cid number,
+sid number primary key,
+name varchar2(10),
+foreign key(cid) references country(cid));
+
+
+
+insert into states
+values
+(1, 1,'Bihar');
+
+insert into states
+values
+(1, 2,'Karnataka');
+
+insert into states
+values
+(1, 3,'Telanagana');
+
+insert into states
+values
+(2, 4,'Missisipi');
+
+insert into states
+values
+(2, 5,'Indiana');
+
+insert into states
+values
+(3, 6,'Scotland');
+
+insert into states
+values
+(3, 7,'Wales');
+
+
+ select states.name from
+ country join states
+ on country.cid=states.cid
+ where country.cid=1;
+

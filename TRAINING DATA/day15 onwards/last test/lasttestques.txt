@@ -1,0 +1,45 @@
+question
+Java Subjective Test 3
+
+Adv Java Subjective Test Paper
+
+
+Time : 90 mins 
+
+
+Marks – 30 
+
+
+Read the question paper carefully before you start 
+
+
+Create an online payment system for Verizon to facilitate the users to pay their monthly mobile, datacard bills. 
+
+
+Note: Make use of servlets, jsp, WebServices where ever applicable, Create database tables using the script provided.
+
+
+1.Design a login page with  user name ,  password , OK  and CANCEL  buttons 
+
+2.Once the user logs in display a page with welcome message  “ Welcome To Verizon Online Payment “ and the following links 
+
+
+a.Check bill details – When user clicks on the link it should ask for mobile number or datacard number. Once entered it should display a page with user details like name, mobile /datacard number, amount due, payment date. When you click on OK button must exit the page and go to Check bill details  page 
+
+b.Payment – When user clicks on the link it should ask for mobile number or datacard number and  display a form with the following details 
+
+
+i.Name – should display name automatically when the page is displayed
+
+ii.Mobile number - should display mobile / datacard number  automatically when the page is displayed
+
+iii.Amount to Pay – To be displayed automatically  
+
+iv.Payment mode – credit card / debit card list
+
+v.Proceed For Payment Button – When user clicks this button  a Webservice should check the validity of the payment like balance amount and if ok must activate the Submit Button 
+
+vi.Submit Button – When user clicks it should display : “ Thank you for payment online “  message  
+
+Cancel Button – when user clicks it should refresh the page to enter new values 
+

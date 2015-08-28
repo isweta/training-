@@ -1,0 +1,135 @@
+EXCEPTION HANDLING is usually written with the following syntax:
+
+EXCEPTION
+   WHEN exception_name1 THEN
+      [statements]
+
+   WHEN exception_name2 THEN
+      [statements]
+
+   WHEN exception_name_n THEN
+      [statements]
+
+   WHEN OTHERS THEN
+      [statements]
+
+END [procedure_name];
+
+
+DECLARE
+SAL employees.salary%TYPE;
+BEGIN
+SELECT salary INTO sal
+FROM employees WHERE employee_id =444;
+DBMS_OUTPUT.PUT_LINE('SALARY OF Employee IS ' || sal);
+EXCEPTION
+
+WHEN NO_DATA_FOUND THEN
+DBMS_OUTPUT.PUT_LINE('No Data found for given id');
+
+WHEN TOO_MANY_ROWS THEN
+DBMS_OUTPUT.PUT_LINE('Multiple records found for given id');
+
+END;
+/
+
+
+What is the difference between pragma exception_init , and raise application error( which 
+is a subprogram from dbms_standard package).
+
+In what situations do you use a Raise application_error subprogram.
+
+
+http://www.oracle.com/pls/db92/db92.error_search
+
+SQL CODE     error name    error message
+ORA-01403 no data found(predefined)
+
+ORA-01400 cannot insert NULL into (string)
+
+ORA-01401 inserted value too large for column
+
+ORA-01402 view WITH CHECK OPTION where-clause violation
+
+
+PRAGMA EXCEPTION_INIT allows to associate an Oracle error
+number with the name of a user-defined error. Here you need
+to defined user-defined exception before it is used in
+PRAGMA EXCEPTION_INIT. There are two parameters: exception
+name and error code.
+
+RAISE_APPLICATION_ERROR allows to create meaningful error
+msg.it works with un-named user defined exceptions. It
+associates the number of the error with the text of the
+error. Therefore, the user-defined exception does nat have a
+name associated with it. There are three parameter:
+err_number, err_msg, keep-err  
+
+
+
+
+
+pragma exception init turns an Oracle Error into a named exception.  If a database 
+operation raises an ORA-00054 "resource busy", you would have to code:
+
+
+....
+exception
+  when others then
+      if (sqlcode=-54) then
+            .... deal with it.
+      else
+            RAISE;
+      end if;
+
+
+if you pragma exception init'ed this error to some named exception RESOURCE_BUSY , you 
+can code:
+
+
+....
+    pragma exception_init( resource_busy, -54 );
+begin
+....
+exception
+   when resource_busy then
+       .... deal with it.
+end;
+
+much cleaner 
+
+
+Raise_application_error is used to RAISE an error - exception_init is used to deal with 
+errors 
+
+I use raise_application_error when I want to setup a custom error message to be returned 
+to a client application
+
+   raise_application_error( -20001, 'You cannot do that!' );
+
+
+or
+
+
+Example
+
+
+
+You could use the SQLERRM function to raise an error as follows:
+
+EXCEPTION
+   WHEN OTHERS THEN
+      raise_application_error(-20001,'An error was encountered - '||SQLCODE||' -ERROR- '||SQLERRM);
+END;
+
+Or you could log the error to a table using the SQLERRM function as follows:
+
+EXCEPTION
+   WHEN OTHERS THEN
+      err_code := SQLCODE;
+      err_msg := SUBSTR(SQLERRM, 1, 200);
+
+      INSERT INTO audit_table (error_number, error_message)
+      VALUES (err_code, err_msg);
+END;
+

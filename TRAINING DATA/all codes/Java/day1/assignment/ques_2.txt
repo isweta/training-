@@ -1,0 +1,136 @@
+drop table empl;
+drop table v;
+drop table f;
+drop table h;
+drop table s;
+drop table c;
+
+
+create table v
+(id number(2));
+create table f
+(id number(2));
+create table h
+(id number(2));
+create table s
+(id number(2));
+create table c
+(id number(2));
+
+create table empl
+(id number(2),
+name varchar2(3));
+
+insert into empl
+values
+(1,'A');
+
+insert into empl
+values
+(2,'B');
+insert into empl
+values
+(3,'C');
+insert into empl
+values
+(4,'D');
+insert into empl
+values
+(5,'E');
+
+insert into v
+values
+(1);
+insert into v
+values
+(2);
+insert into v
+values
+(3);
+insert into v
+values
+(4);
+insert into v
+values
+(5);
+
+insert into f
+values
+(2);
+insert into f
+values
+(5);
+
+insert into h
+values
+(1);
+insert into h
+values
+(2);
+insert into h
+values
+(3);
+insert into h
+values
+(4);
+
+insert into s
+values
+(3);
+insert into s
+values
+(5);
+
+insert into c
+values
+(1);
+insert into c
+values
+(4);
+insert into c
+values
+(5);
+
+
+
+
+
+select empl.id, empl.name, v.id vid, f.id fid, h.id hid, s.id sid, c.id cid
+from empl 
+full outer join v on empl.id=v.id
+full outer join f on empl.id=f.id
+full outer join h on empl.id=h.id
+full outer join s on empl.id=s.id
+full outer join c on empl.id=c.id
+order by empl.id ;
+
+
+
+select empl.id as eid , empl.name as ename, nvl(v.id,0) as vid, nvl(f.id,0) as fid, nvl(h.id,0) as hid, nvl(s.id,0) as sid, nvl(c.id,0) as cid
+from empl 
+full outer join v on empl.id=v.id
+full outer join f on empl.id=f.id
+full outer join h on empl.id=h.id
+full outer join s on empl.id=s.id
+full outer join c on empl.id=c.id
+order by empl.id 
+;
+
+select * from
+(select joined.eid, joined.ename, (joined.vid+joined.fid+joined.hid+joined.sid+joined.cid)/joined.eid as no_reg
+from
+(
+select empl.id as eid , empl.name as ename, nvl(v.id,0) as vid, nvl(f.id,0) as fid, nvl(h.id,0) as hid, nvl(s.id,0) as sid, nvl(c.id,0) as cid
+from empl 
+full outer join v on empl.id=v.id
+full outer join f on empl.id=f.id
+full outer join h on empl.id=h.id
+full outer join s on empl.id=s.id
+full outer join c on empl.id=c.id
+order by empl.id) joined) participant
+where participant.no_reg>3
+;
+
+
+
+

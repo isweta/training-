@@ -1,0 +1,31 @@
+package dao.testpackage;
+
+import static org.junit.Assert.assertEquals;
+
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+
+import dao.source.DAOOrderToBill;
+import dao.source.DAOOrderToBillOracle;
+
+public class DAOGetCustomerIdTest {
+	DAOOrderToBill dao;
+	@Before
+	public void initEnv() {
+
+		System.out.println("Creating Test Environment");
+		dao = new DAOOrderToBillOracle();
+	}
+
+	@After
+	public void closeEnv() {
+		System.out.println("Cleaning Test Environment");
+	}
+
+	@Test
+	public void testInsertDevice(int order_id) {
+		
+		assertEquals(1, dao.insertDevice(deviceId, partNo, manufacturer, zipcode, portId, status, bandwidthMbps, deviceType));
+	}
+}

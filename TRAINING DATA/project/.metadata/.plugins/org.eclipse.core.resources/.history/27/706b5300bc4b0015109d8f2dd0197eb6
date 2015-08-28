@@ -1,0 +1,53 @@
+package testPackage;
+
+import org.junit.runner.RunWith;
+import org.junit.runners.Suite;
+import org.junit.runners.Suite.SuiteClasses;
+
+@RunWith(Suite.class)
+@SuiteClasses({   DAOInsertDevice.class,
+
+	 DAOGetProvisionReadyOrders.class,
+
+	  DAOGetZipcode.class,
+
+	 DAOGetDeviceIdsInZipcode.class,
+
+	  DAOGetDeviceSeqNo.class,
+
+	DAOGetDevice.class,
+
+	  DAOGetVacantPortIdsInDevice.class,
+
+	 DAOGetAllPortIdsInDevice.class,
+
+	  DAOGetReservedPortIdsInDevice.class,
+
+	  DAOGetAllZipcodes.class,
+
+	  DAOInsertConnectionoCircuitDesign.class,
+
+	  DAOGetCircuitOrderIdForChangeOrder.class,
+
+	  DAOUpdateDeviceStatus.class,
+
+	  DAOUpdateCircuitStatus.class,
+
+	  DAOUpdateDestinationPort.class,
+
+	 DAOGetCircuitDetails.class,
+
+	DAOGetAllCircuitsOfCustomer.class,
+
+	  DAOGetServiceAddressId.class,
+
+	  DAOGetAllNodePairs.class,
+
+	 DAOGetOrderDetails.class,
+
+	  DAOGetServiceId.class,
+
+	  DAOGetCustomerId.class,})
+public class AllTests {
+
+}

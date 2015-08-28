@@ -1,0 +1,111 @@
+Assume you have MessageService interface containing a method sendMessage( String receiverName, String msg) that can be implemented by different messaging services like EmailService, What'sAppService, and TwitterService etc.
+
+
+
+
+
+Create a class called MyMessageSender that shall use any of these messaging services to send a message. 
+( Use Dependency Injection to send messages  from your application using the email, whatsApp or twitter messaging services.)
+
+
+
+
+
+Create your main class that will use the MyMessageSender  class to send messages.
+
+
+
+
+
+
+--------------------MessengeTest.java------------
+package com.vzapp;
+
+
+import org.omg.CORBA.portable.ApplicationException;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+
+public class MessengerTest {
+
+	public static void main(String[] args) {
+		ApplicationContext bean=new ClassPathXmlApplicationContext("mybean.xml");
+		MyMessageSender m=(MyMessageSender)bean.getBean("mymsgsender1");
+		m.ms.sendMessage("sweta", "Hello");
+	}
+
+}
+
+
+-----------------MyMessageSender.java------------
+package com.vzapp;
+
+public class MyMessageSender {
+	MessageService ms;
+
+	public MessageService getMs() {
+		return ms;
+	}
+
+	public void setMs(MessageService ms) {
+		this.ms = ms;
+	}
+	
+	
+
+}
+-------------------------MessageService.java-------------------------
+package com.vzapp;
+
+public interface MessageService {
+	public void sendMessage( String receiverName, String msg);
+}
+-----------------EmailService.java------------------
+package com.vzapp;
+
+public class EmailService implements MessageService{
+
+	@Override
+	public void sendMessage(String receiverName, String msg) {
+		System.out.println("Message : "+msg +"  : sent to receiver :"+ receiverName+ " by Email");
+		
+	}
+	
+}
+-----------------TwitterService.java------------------
+
+package com.vzapp;
+
+public class TwitterService implements MessageService{
+
+	@Override
+	public void sendMessage(String receiverName, String msg) {
+		System.out.println("Message : "+msg +"  : sent to receiver :"+ receiverName+ " by Twitter");
+		
+	}
+	
+}
+
+-------------------WhatsappService.java--------------------------
+package com.vzapp;
+
+public class WhatsappService implements MessageService{
+
+	@Override
+	public void sendMessage(String receiverName, String msg) {
+		System.out.println("Message : "+msg +"  : sent to receiver :"+ receiverName+ " by Whatsapp");
+		
+	}
+	
+}
+
+-------------------mybean.xml---------------------------------------
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN 2.0//EN" "http://www.springframework.org/dtd/spring-beans-2.0.dtd">
+<beans>
+<bean id="mymsgsender1" class="com.vzapp.MyMessageSender">
+<property name="ms" ref="msgservice1"></property>
+	
+</bean>
+<bean id="msgservice1" class="com.vzapp.WhatsappService"></bean>
+</beans>

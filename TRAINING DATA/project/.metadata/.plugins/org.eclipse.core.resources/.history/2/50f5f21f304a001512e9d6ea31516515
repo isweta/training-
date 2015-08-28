@@ -1,0 +1,55 @@
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>Insert title here</title>
+<script>
+function createLine()
+{
+
+    geocoder = new google.maps.Geocoder();
+    var latlng = new google.maps.LatLng(7.5653, 80.4303);
+    var mapOptions = {
+        zoom: 8,
+        center: latlng,
+        mapTypeId: google.maps.MapTypeId.ROADMAP
+    }
+    map = new google.maps.Map(document.getElementById("directionpanel"), mapOptions);
+
+    var address = document.getElementById('startvalue').value;
+    var address2 = document.getElementById('endvalue').value;
+
+    var temp, temp2;
+
+    geocoder.geocode({ 'address': address }, function (results, status) {
+        temp = results[0].geometry.location;
+        geocoder.geocode({ 'address': address2 }, function (results, status) {
+            temp2 = results[0].geometry.location;
+
+        var route = [
+          temp,
+          temp2
+        ];
+
+        var polyline = new google.maps.Polyline({
+            path: route,
+            strokeColor: "#ff0000",
+            strokeOpacity: 0.6,
+            strokeWeight: 5
+        });
+
+        polyline.setMap(map);
+        });
+    });
+}
+
+</script>
+</head>
+<body>
+
+</body>
+
+<a href='javascript:createLine()'>try!</a>
+</html>

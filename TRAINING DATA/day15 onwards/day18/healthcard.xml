@@ -1,0 +1,9 @@
+<?xml version="1.0" ?>
+<HealthCard>
+<PatientName pid="212">Pundit</PatientName>
+   <date>12/03/2009</date>
+   <BP>125/82</BP>
+   <TempRead1 scale="C" time="1130">101</TempRead1>
+   <TempRead2 scale="C" time="1530">100</TempRead2>
+   <TempRead3 scale="C" time="1930">98.6</TempRead3>
+</HealthCard>

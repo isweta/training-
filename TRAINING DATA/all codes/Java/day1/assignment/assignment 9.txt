@@ -1,0 +1,159 @@
+------------------question 1------------------//used insertion date field to test if it throws error on holiday or not
+create table holiday
+(holiday_date varchar2(6),
+holidaY_name varchar2(20));
+
+insert into holiday
+values
+(&holiday_date, &holiday_name);
+'15-AUG'
+'Independence Day'
+/
+'26-JAN'
+'Republic Day'
+/
+'02-OCT'
+'Gandhi Jayanti'
+/
+'25-DEC'
+'Christmas'
+
+create table emp2
+( empno number,
+ename varchar2(10),
+salary number,
+insertion_date date default sysdate);
+
+
+
+
+
+
+
+create or replace trigger restrict_mani
+	before insert or update or delete on emp2
+ 	for each row
+	declare
+		month_i varchar2(3);
+		day_i varchar2(2);
+		day_mon holiday.holiday_date%type;		
+		h holiday%rowtype;
+		holi_day holiday.holiday_date%type;
+		cursor hc is
+			select * from holiday;
+	begin
+		month_i :=to_char(:new.insertion_date, 'MON');
+		day_i :=to_char(:new.insertion_date, 'DD');
+		day_mon := day_i ||'-'|| month_i;
+		
+		for h in hc loop
+			holi_day :=h.holiday_date;
+			
+			if holi_day=day_mon then
+				
+				raise_Application_error(-20007, ('Cannot manipulate data on ' ||h.holiday_name));
+			
+				
+			end if;
+		end loop;
+		
+	end;
+/
+
+		
+insert into emp2
+(empno, ename,salary)
+values
+(1,'ABC',1000);
+
+		
+insert into emp2
+values
+(3,'ABC',1000,'15-AUG-1992');
+
+insert into emp2
+values
+(6,'ABCgfd',1000,'26-JAN-1993');
+
+insert into emp2
+(empno, ename,salary)
+values
+(9,'ABC',1000);
+
+
+------------------------------question 2---------------------------------------
+
+create table BigC
+(item_code number primary key ,
+item_name varchar2(20),
+brand varchar2(10),
+no_of_items number);
+
+create table customers(
+cust_id number primary key,
+cust_name varchar2(10),
+address varchar2(20));
+
+create table item_issues
+(cust_id number ,
+item_id number ,
+issue_Date date);
+
+
+
+create or replace package Shopping_mart
+is
+	procedure add_item(itemcode number, itemname varchar2, brand varchar2, no_of_items varchar2);
+	procedure add_customer(cust_id number, cust_name varchar2, address varchar2);
+	procedure issue_items(cust_id number, item_id number, issue_Date date);
+	
+	
+	
+end Shopping_mart;
+/
+
+
+create or replace package body Shopping_mart
+is
+
+	procedure add_item(itemcode number, itemname varchar2, brand varchar2, no_of_items varchar2)
+	is
+	begin
+			insert into BigC
+			values
+			(itemcode , itemname , brand , no_of_items);
+	end add_item;
+
+	procedure add_customer(cust_id number, cust_name varchar2, address varchar2)
+	is
+	begin
+		insert into customers
+		values
+		(cust_id, cust_name, address);
+	end add_customer;
+	
+	procedure issue_items(cust_id number, item_id number, issue_Date date)
+	is
+	begin
+		insert into item_issues
+		values
+		(cust_id, item_id, issue_date);
+		update BigC
+		set BigC.no_of_items=bigc.no_of_items-1
+		where bigC.item_code=item_id;
+		
+	end issue_items;
+
+	
+
+end Shopping_mart;
+/
+
+call Shopping_mart.add_customer(1,'A', 'Hy');
+select * from customers;
+call shopping_mart.add_item(1,'pen','Reynolds', 5);
+select * from BigC;
+call shopping_mart.issue_items(1,1,sysdate);
+select * from item_issues;
+			
+

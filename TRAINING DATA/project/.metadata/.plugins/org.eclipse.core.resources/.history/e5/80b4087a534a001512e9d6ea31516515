@@ -1,0 +1,9 @@
+
+public class TestDAO {
+
+	public static void main(String[] args) {
+		DAOOrderToBill dao=new DAOOrderToBillOracle();
+		dao.insertDevice("111111", "testing", "cisco", 9623211, 5, "VACANT", 200);
+	}
+
+}

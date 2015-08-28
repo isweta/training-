@@ -1,0 +1,25 @@
+<xsd:schema 
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	targetNamespace="http://xml.netbeans.org/schema/emp">
+
+
+<xsd:element name="employee" >
+<xsd:complextype>
+	<xsd:element name="name" type="xsd:string"> 
+	
+	</xsd:element>
+
+	<xsd:element name="id" type="xsd:integer"> 
+	</xsd:element>
+
+	<xsd:element name="salary" type="xsd:double" default="10000"> 
+	<xsd:restriction base="xsd:double">
+		<xsd:minInclusive value="10000">
+	</xsd:restriction>
+	</xsd:element>
+
+</xsd:complextype> 
+</xsd:element>
+
+
+</xsd:schema>

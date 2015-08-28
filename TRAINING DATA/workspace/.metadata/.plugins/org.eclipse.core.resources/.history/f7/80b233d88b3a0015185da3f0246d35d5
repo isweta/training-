@@ -1,0 +1,56 @@
+import java.sql.CallableStatement;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.sql.Types;
+
+
+public class Demo3CallProc {
+	
+	public static void main(String[] args) {
+		Connection con = null;
+		CallableStatement cstmt = null;
+		
+		try {
+			Class.forName("oracle.jdbc.driver.OracleDriver");
+			String uname = "hr";
+			String password = "hr";
+			String url = "jdbc:oracle:thin:@localhost:1521:orcl";
+			con = DriverManager.getConnection(url, uname, password);
+			
+			String query = "call{sum_ab(?,?,?)}";
+			cstmt = con.prepareCall(query);
+			cstmt.registerOutParameter(3, Types.INTEGER);
+			cstmt.setInt(1, 5);
+			cstmt.setInt(2, 7);
+			cstmt.execute();
+			int out=cstmt.getInt(3);
+			System.out.println("Result of procedure " + out);
+			System.out.println("Completed");
+			
+		} catch (ClassNotFoundException e1) {
+			e1.printStackTrace();
+		} catch (SQLException e) {
+			e.printStackTrace();
+			
+		} finally {
+			try {
+
+				if (cstmt != null)
+					cstmt.close();
+				if (con != null)
+					con.close();
+			} catch (SQLException e) {
+
+				e.printStackTrace();
+			}
+
+		}
+
+	}
+	}
+	
+	
+
+

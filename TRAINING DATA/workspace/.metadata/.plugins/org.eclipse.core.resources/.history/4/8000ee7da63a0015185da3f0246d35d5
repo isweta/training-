@@ -1,0 +1,44 @@
+import java.util.Iterator;
+import java.util.List;
+
+
+public class TestDAO {
+
+	public static void main(String[] args) {
+		//listCharacters();
+		DAOHarryPotterCharacters dhp=new DAOHarryPotterCharacters();
+		List<HpCharacter> list=dhp.searchBy("House","gryffindor");
+		for(Iterator<HpCharacter> it=list.iterator(); it.hasNext();){
+			System.out.println(it.next());
+		}
+
+	}
+	
+	public static void listCharacters(){
+		DAOHarryPotterCharacters dhp=new DAOHarryPotterCharacters();
+		List<HpCharacter> list=dhp.listCharacters();
+		for(Iterator<HpCharacter> it=list.iterator(); it.hasNext();){
+			System.out.println(it.next());
+		}
+	}
+	public static void testInsert(){
+		DAOHarryPotterCharacters dhp=new DAOHarryPotterCharacters();
+		HpCharacter newChar=new HpCharacter("Albus Severus","Gryffindor", "Student","Family", "No");
+		int insertStatus=dhp.insert(newChar);
+		if(insertStatus==0)
+			System.out.println("Record not inserted");
+		else
+			System.out.println("Record inserted Succesfully");
+	}
+	
+	public static void getAllGryffindors()
+	{
+		String query=
+		DAOHarryPotterCharacters dhp=new DAOHarryPotterCharacters();
+		List<HpCharacter> list=dhp.returnQuery(query);
+		for(Iterator<HpCharacter> it=list.iterator(); it.hasNext();){
+			System.out.println(it.next());
+		}
+	}
+
+}

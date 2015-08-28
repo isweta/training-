@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN 2.0//EN" "http://www.springframework.org/dtd/spring-beans-2.0.dtd">
+<beans>
+<bean id="t1" class="org.mycompany.Training">
+<property name="name" value="JAVA Batch 1"/>
+<property name="location" value="Hyd"/>
+<property name="traineeList">
+<list>
+<ref bean="tr1"/>
+<ref bean="tr2"/>
+<ref bean="tr3"/>
+</list>
+
+</property>
+
+</bean>
+
+<bean id="tr1" class="org.mycompany.Trainee">
+<property name="name" value="sweta"/>
+<property name="marks" value="58"/>
+</bean>
+<bean id="tr2" class="org.mycompany.Trainee">
+<property name="name" value="prateek"/>
+<property name="marks" value="80"/>
+</bean>
+<bean id="tr3" class="org.mycompany.Trainee">
+<property name="name" value="aspa"/>
+<property name="marks" value="70"/>
+</bean>
+
+</beans>

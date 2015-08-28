@@ -1,0 +1,324 @@
+------login.jsp-----
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+	pageEncoding="ISO-8859-1"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+
+	<form action="AuthenticateServlet" method="post">
+		Enter Username: <input type="text" name="uname" /><br> Enter
+		Pass:<input type="password" name="pass" /><br> <input
+			type="submit" value="OK" /> <input type="reset" value="Cancel" />
+
+	</form>
+
+</body>
+</html>
+
+----------AuthenticateServlet.java------------------------
+import java.io.IOException;
+import java.io.PrintWriter;
+
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+/**
+ * Servlet implementation class AuthenticateServlet
+ */
+public class AuthenticateServlet extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+
+	/**
+	 * @see HttpServlet#HttpServlet()
+	 */
+	public AuthenticateServlet() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+	/**
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
+	 *      response)
+	 */
+	protected void doGet(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+
+	}
+
+	/**
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
+	 *      response)
+	 */
+	protected void doPost(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+		String uname = request.getParameter("uname");
+		String pass = request.getParameter("pass");
+		HttpSession hs = request.getSession();
+		hs.setAttribute("uname", uname);
+		hs.setAttribute("pass", pass);
+		PrintWriter out = response.getWriter();
+		// get value from database
+		if (uname.equals("admin")) {
+			if (pass.equals("adminpass")) {
+				RequestDispatcher rd = request
+						.getRequestDispatcher("welcome.jsp");
+				rd.forward(request, response);
+			} else {
+				RequestDispatcher rd = request
+						.getRequestDispatcher("login.jsp");
+				out.println("<br>Incorrect Password");
+				rd.include(request, response);
+			}
+		} else {
+			RequestDispatcher rd = request.getRequestDispatcher("login.jsp");
+			out.println("<br>Incorrect Username");
+			rd.include(request, response);
+		}
+	}
+
+}
+-----------------------welcome.jsp----------------
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+	pageEncoding="ISO-8859-1"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>Welcome to Verizon Online Payment</title>
+
+<script>
+	
+</script>
+</head>
+<body>
+	<h1>Welcome To Verizon Online Payment</h1>
+	<br>
+	<a href="getNo1.jsp">Check Bill Details</a>
+	<br>
+	<a href="getNo2.jsp">Payment</a>
+</body>
+</html>
+
+
+---------getNo1.jsp----------------
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+	pageEncoding="ISO-8859-1"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+
+	<form action="CheckBillServlet" method="post">
+		Enter Mobile Or Datacard No: <input type="text" name="connNo" /> <br>
+		<input type="submit" value="submit" />
+	</form>
+
+</body>
+</html>
+
+----------CheckBillServlet.java--------------
+import java.io.IOException;
+
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+/**
+ * Servlet implementation class CheckBillServlet
+ */
+public class CheckBillServlet extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+
+	/**
+	 * @see HttpServlet#HttpServlet()
+	 */
+	public CheckBillServlet() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+	/**
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
+	 *      response)
+	 */
+	protected void doGet(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+	}
+
+	/**
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
+	 *      response)
+	 */
+	protected void doPost(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException {
+		String connNo = request.getParameter("connNo");
+		// from database get amountdue and payment date
+
+		int amountdue = 1000;
+		String paymentDate = "20 Aug 2015";
+		request.setAttribute("connNo", connNo);
+		request.setAttribute("amtdue", amountdue);
+		request.setAttribute("paydate", paymentDate);
+		RequestDispatcher rd = request.getRequestDispatcher("checkBill.jsp");
+		rd.forward(request, response);
+	}
+
+}
+------------------checkBill.jsp--------
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+Hello ${sessionScope.uname}
+<br>
+
+Mobile Or Datacard No: ${requestScope.connNo}<br>
+Amount due: ${requestScope.amtdue}<br>
+Pay By: ${requestScope.paydate }
+
+</body>
+</html>
+
+
+
+-----------getNo2.jsp------------
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+	pageEncoding="ISO-8859-1"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+
+	<form action="PaymentServlet" method="post">
+		Enter Mobile Or Datacard No: <input type="text" name="connNo" /> <br>
+		<input type="submit" value="submit" />
+	</form>
+
+</body>
+</html>
+
+
+---------------paymentServlet.java-----------
+import java.io.IOException;
+
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+/**
+ * Servlet implementation class PaymentServlet
+ */
+public class PaymentServlet extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+
+	/**
+	 * @see HttpServlet#HttpServlet()
+	 */
+	public PaymentServlet() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+	/**
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
+	 *      response)
+	 */
+	protected void doGet(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+	}
+
+	/**
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
+	 *      response)
+	 */
+	protected void doPost(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException {
+		String connNo = request.getParameter("connNo");
+		// get balance due from databse
+		int amtToPay = 1000;
+		RequestDispatcher rd = request.getRequestDispatcher("payment.jsp");
+		request.setAttribute("connNo", connNo);
+		request.setAttribute("amtToPay", amtToPay);
+		rd.forward(request, response);
+	}
+
+}
+
+
+-----------------payment.jsp--------
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+	pageEncoding="ISO-8859-1"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>Insert title here</title>
+<script>
+	function CallWebService() {
+
+		var xmlHttp;
+		xmHttp = new XMLHttpRequest();
+
+		xmlHttp.onreadystatechange = function() {
+
+			if (xmlHttp.readyState == 4 && xmlHttp.status == 200) {
+
+				var res = xmlHttp.responseText;
+				if (res == "ok")
+					document.getElementById("done").disabled = "enabled";
+			}
+		}
+
+		xmlHttp.open("POST", "AuthenticateWebServlet?cname=" + cname, true);
+		/* alert("Opened RequestObject"); */
+		xmlHttp.send();
+
+	}
+</script>
+</head>
+<body>
+
+	<form action="thankyou.jsp">
+		Hello ${sessionScope.uname} <br> Mobile Or Datacard No:
+		${requestScope.connNo}<br> Amount to Pay:
+		${requestScope.amtToPay}<br> <select name="payOpt">
+			<option>CitiBank Credit Card</option>
+			<option>CitiBank Debit Card</option>
+			<option>HDFC Credit Card</option>
+			<option>HDFC Credit Card</option>
+		</select> <br> <input type="button" onClick="CallWebService()"
+			value="ProceedToPayment" /> <br> <input type="submit"
+			name="done" value="thankyou.jsp" disabled="disabled" />
+
+	</form>
+
+
+</body>
+</html>

@@ -1,0 +1,55 @@
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.PreparedStatement;
+
+public class TestInsert {
+
+	public static void main(String[] args) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		int noOfRowsUpdated = 0;
+		try {
+			Class.forName("oracle.jdbc.driver.OracleDriver");
+			String uname = "hr";
+			String password = "hr";
+			String url = "jdbc:oracle:thin:@localhost:1521:orcl";
+			con = DriverManager.getConnection(url, uname, password);
+			con.setAutoCommit(false);
+			System.out.println(con.getSchema());
+			String query = "update empl set salary=? where empno=?";
+			pstmt = con.prepareStatement(query);
+			pstmt.setInt(2, 102);
+			pstmt.setInt(1, 50000);
+			noOfRowsUpdated = pstmt.executeUpdate();
+			System.out.println("Updated " + noOfRowsUpdated + " records");
+			System.out.println("Completed");
+			con.commit();
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} catch (SQLException e) {
+			e.printStackTrace();
+			try {
+				con.rollback();
+			} catch (SQLException e1) {
+
+				e1.printStackTrace();
+			}
+		} finally {
+			try {
+
+				if (pstmt != null)
+					pstmt.close();
+				if (con != null)
+					con.close();
+			} catch (SQLException e) {
+
+				e.printStackTrace();
+			}
+
+		}
+
+	}
+
+}

@@ -1,0 +1,144 @@
+-----------------index.html------------------
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+	<h1>Enter details</h1>
+	<form action="welcome.htm" method="POST">
+		<table>
+			<tr>
+				<td>Employee Code</td>
+				<td><input type="text" name="empcode"/></td>
+			</tr>
+			<tr>
+				<td>Employee Name</td>
+				<td><input type="text" name="empname"/></td>
+			</tr>
+			<tr>
+				<td>Salary</td>
+				<td><input type="text" name="salary"/></td>
+			</tr>
+			<tr>
+				<td></td>
+				<td><input type="submit" value="submit"/></td>
+			</tr>
+		</table>
+	</form>
+</body>
+</html>
+
+----------------web.xml-----------------
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://java.sun.com/xml/ns/javaee"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+	id="WebApp_ID" version="2.5">
+	<display-name>EmployeeApp</display-name>
+	<welcome-file-list>
+
+		<welcome-file>index.html</welcome-file>
+	</welcome-file-list>
+
+	<servlet>
+		<servlet-name>dispatcher</servlet-name>
+		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+	</servlet>
+	
+	<servlet-mapping>
+		<servlet-name>dispatcher</servlet-name>
+		<url-pattern>*.htm</url-pattern>
+	</servlet-mapping>
+</web-app>
+
+
+-----------dispatcher-servlet.xml-----------
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd"
+	xmlns:context="http://www.springframework.org/schema/context">
+
+	<context:annotation-config />
+	<context:component-scan base-package="com.controller" />
+
+	<bean
+		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="prefix" value="/WEB-INF/jsp/" />
+		<property name="suffix" value=".jsp" />
+	</bean>
+
+
+</beans>
+
+-------------Employee.java--------------
+package com.controller;
+
+import org.springframework.stereotype.Component;
+
+public class Employee {
+
+	String empcode;
+	String empname;
+	double salary;
+
+	public String getEmpcode() {
+		return empcode;
+	}
+
+	public void setEmpcode(String empcode) {
+		this.empcode = empcode;
+	}
+
+	public String getEmpname() {
+		return empname;
+	}
+
+	public void setEmpname(String empname) {
+		this.empname = empname;
+	}
+
+	public double getSalary() {
+		return salary;
+	}
+
+	public void setSalary(double salary) {
+		this.salary = salary;
+	}
+
+}
+--------EmployeeMaintenance.java------------
+package com.controller;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+
+@Controller
+public class EmployeeMaintenance {
+	@RequestMapping(value = "/welcome.htm", method = RequestMethod.POST)
+	String addBean(@ModelAttribute Employee empl, ModelMap modelMap) {
+		modelMap.addAttribute("empl", empl);
+		return "addedbean";
+	}
+}
+-------------addedbean.jsp--------------
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+	pageEncoding="ISO-8859-1"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>Welcome ${empl.empname} your employee code ${empl.empcode}
+	and salary ${empl.salary} successfully updated to bean
+</body>
+</html>

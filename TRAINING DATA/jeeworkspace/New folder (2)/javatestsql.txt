@@ -1,0 +1,207 @@
+create table Acct_Mast
+(accno number primary key,
+cust_name varchar2(20),
+act_type varchar2(20),
+current_balance number,
+acct_open_date date,
+address varchar2(30), 
+phno varchar2(12), 
+email varchar2(10) ,
+check(email like '%@%.com' and address like '%India%' and phno like '91-??????????'));
+
+
+create table transact
+(accno number,
+transaction_id number primary key,
+transaction_type varchar2(20) check(transaction_type in ('deposit','withdraw')),
+amt number,
+tran_date date,
+foreign key(accno) references Acct_Mast(accno));
+
+
+create sequence accnoSeq
+increment by 1
+start with 1
+nomaxvalue
+nominvalue
+nocycle
+nocache;
+
+
+create sequence transIdSeq
+increment by 1
+start with 1
+nomaxvalue
+nominvalue
+nocycle
+nocache
+
+create or replace package BankingSystem
+is
+	create or replace procedure createAcc
+	(accno number,
+	cust_name varchar2,
+	act_type varchar2,
+	address varchar2,
+	phno varchar2,
+	email varchar2,
+	panValid varchar2, adrProofValid varchar2, openingBalance);
+	
+	create or replace function deposit
+	(accno number,amt number);
+	
+	create or replace function withdraw
+	(accnum number,amt number);
+	
+	
+
+end BankingSystem;
+
+create or replace package body BankingSystem 
+is
+	
+	
+	create or replace procedure createAcc
+	(cust_name varchar2,
+	act_type varchar2,
+	address varchar2,
+	phno varchar2,
+	email varchar2,
+	panValid varchar2, adrProofValid varchar2, openingBalance number)
+	is
+		PAN_NOT_VALID_EXCEPTION exception;
+		ADR_NOT_VALID_EXCEPTION exception;
+		OPENING_BALNACE_LESS_EXCEPTION exception;
+	begin
+		if panValid='no' then
+			raise PAN_NOT_VALID_EXCEPTION;
+		end if;
+		if adrProofValid='no' then
+			raise ADR_NOT_VALID_EXCEPTION;
+		end if;
+		if openingBalance<1000 then
+			raise OPENING_BALNACE_LESS_EXCEPTION;
+		else
+		
+			insert into acct_mast
+			values
+			(accnoSeq.nextVal(), cust_name, act_type, openingBalance, sysdate, address,phno,email);
+		end if;
+	end ;
+
+	
+	create or replace function deposit	
+	(accno number,amt number)
+	return number
+	is
+		NEG_EXCEPTION exception;
+	begin
+			if(amt<0) then
+				raise NEG_EXCEPTION;
+			else
+				insert into transact
+				values
+				(accno, transIdseq.nextVal(),'deposit',amt,sysdate);
+			end if;
+			return 1;
+	end;
+
+	create or replace function withdraw
+	(accnum number,amt number)
+	is
+		INSUFFICIENT_BALANCE_EXCEPTION exception;
+		NEGATIVE_OR_ZERO_WITHDRAW_EXCEPTION exception;
+		
+		
+			
+	begin
+		select current_balance from acct_mast into cb
+			where accno=accnum;
+		if(amt<0) then
+			raise NEGATIVE_OR_ZERO_WITHDRAW_EXCEPTION;
+		elseif cb<amt then
+			raise INSUFFICIENT_BALANCE_EXCEPTION;
+		else
+			insert into transact
+			values
+			(accnum, transIdseq.nextVal(),'withdraw',amt,sysdate);
+		end if;
+	end ;
+
+	create or replace function reqCheckBook
+	(accno number)
+	return int
+	is
+		begin
+			dbms_output.put_line("New cheque book issued");
+			return 1;
+		end;
+	
+	
+
+	create or replace procedure dispAccStmt
+	(acctno number, start_d date, end_d date)
+	is
+		
+		acur  transact%rowtype;
+		cursor actstmt is
+			select accno,transaction_type, amt, tran_Date 
+			into ano, trantype, amount,tdate
+			from transact
+			where ano=acctno and 
+				tdate between start and end
+			order by tdate;
+		cname acct_mast.cust_name%type;
+		ano number;
+		cb number;
+	begin	
+		select accno, cust_name, current_balance from acct_mast
+		into ano, cname, cb
+		where ano=acctno;
+		
+		dbms_output.put_line('Account statement for Account no:' || ano || ' Name: ' || cname || 'has current balance ' || cb);
+		dbms_output.put_line('Transaction details');
+		for acur in actstmt
+		loop
+			dbms_output.put_line('Date :' || acur.tdate )	;
+			dbms_output.put_line('Type :' || acur.trantype)	;
+			dbms_output.put_line('Amount :' || acur.amount )	;
+		end loop;
+	end;
+		
+			
+			
+	create or replace trigger restricttrans
+	for insert on transact
+	for each row
+	declare
+		hour number;
+	begin 
+			
+			if not(to_number(to_char(sys_Date, 'HH')) between 8 and 16) then
+				raise TRANSACTION_NOT_ALLOWED_EXCEPTION;
+
+			end if;
+	end;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+end BankingSystem;	

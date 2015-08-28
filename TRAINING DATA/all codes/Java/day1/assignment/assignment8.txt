@@ -1,0 +1,110 @@
+
+ set autocommit off;
+ set serveroutput on;
+
+----------------question 1-------------
+
+create or replace
+procedure payslip(eid emp.empno%type) is
+	eno emp.empno%type;
+	name emp.ename%type;
+	salary emp.sal%type;
+	hra emp.sal%type;
+	da emp.sal%type;
+	pf emp.sal%type;
+	it emp.sal%type;
+	deductions emp.sal%type;
+	gross emp.sal%type;
+	net emp.sal%type;
+		
+	begin
+		select empno, ename, sal into eno, name, salary
+		from emp 
+		where empno=eid;
+		hra :=0.1*salary;
+		da :=0.2*salary;
+		pf :=0.08*salary;
+		it :=0.05*salary;
+		deductions :=pf+it;
+		gross :=salary+hra+da+deductions;
+		net :=gross-deductions;
+		dbms_output.put_line('Payslip of Employee with id: ' || eno ||' name: '|| name);
+		dbms_output.put_line('Basic salary: ' || salary);
+		dbms_output.put_line('HRA: ' || hra);
+		dbms_output.put_line('DA: '|| da);
+		dbms_output.put_line('PF: '||pf);
+		dbms_output.put_line('IT: '||it);
+		dbms_output.put_line('Deductions: '||deductions);
+		dbms_output.put_line('Gross Salary: '|| gross);
+		dbms_output.put_line('Net Salary: '|| net);
+	end;
+
+call payslip(7844);
+--------------------------question 2-------------------------
+create table cust_connection
+(custid number(6),
+cname varchar2(10),
+fromdate date,
+todate date,
+duedate date,
+units number(6),
+totalamtdue number(6,2));
+
+insert into cust_connection
+values
+(1,'Sweta', '29-JUN-15', '31-JUL-15', '5-AUG-15', 500, 1000);
+
+
+create or replace
+procedure show_mobile_bill(cid cust_connection.custid%type) is
+	custid cust_connection.custid%type;
+	cname cust_connection.cname%type;
+	fromdate cust_connection.fromdate%type;
+	todate cust_connection.todate%type;
+	duedate cust_connection.duedate%type;
+	units cust_connection.units%type;
+	totalamtdue cust_connection.totalamtdue%type;
+	
+		
+	begin
+		select custid,cname,fromdate,todate,duedate,units,totalamtdue
+		into custid,cname,fromdate,todate,duedate,units,totalamtdue
+		from cust_connection
+		where cust_connection.custid=custid;
+		
+		dbms_output.put_line('Mobile Bill of Customer with id: ' || custid ||' Name: '|| cname);
+		dbms_output.put_line('From Date: ' || fromdate);
+		dbms_output.put_line('To Date: ' || todate);
+		dbms_output.put_line('Due Date: '|| duedate);
+		dbms_output.put_line('Units: '||units);
+		dbms_output.put_line('Total Amount Due: '||totalamtdue);
+		
+	end;
+/
+
+call show_mobile_bill(1);
+
+
+
+--------------question 3-----------------
+
+create or replace 
+procedure factorial(num number) is
+	i number;
+	pro number;
+	begin
+		i:=1;
+		pro:=1;
+		loop
+			pro:=pro*i;
+			exit when i=num;
+			i:=i+1;
+		end loop;
+		dbms_output.put_line('Factorial of '||num||' is: '||pro);
+	end;
+/
+			
+call factorial(5);
+
+
+-----------------------------------------------------------------------------------------

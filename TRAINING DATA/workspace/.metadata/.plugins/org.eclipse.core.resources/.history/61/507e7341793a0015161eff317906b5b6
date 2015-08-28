@@ -1,0 +1,35 @@
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.PreparedStatement;
+
+public class TestFile {
+
+	public static void main(String[] args) {
+		try {
+			Class.forName("oracle.jdbc.driver.OracleDriver");
+			String uname = "scott";
+			String password = "tiger";
+			String url = "jdbc:oracle:thin:@localhost:1521:orcl";
+			Connection con=DriverManager.getConnection(url, uname, password);
+			String query="select ename, salary from empl where empno=? and salary>?";
+			PreparedStatement pstmt=con.prepareStatement(query);
+			pstmt.setInt(1, 102);
+			pstmt.setInt(2, 20000);
+			ResultSet rs=pstmt.executeQuery();
+			while(rs.next()){
+				String name=rs.getString("ename");
+				int salary=rs.getInt("salary");
+				System.out.println("Name: "+ name+" Salary: "+salary);
+			}
+			System.out.println("Completed");
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+	}
+
+}

@@ -1,0 +1,58 @@
+------q1----------
+
+select * 
+from emp join dept
+on emp.deptno=dept.deptno
+where job='MANAGER'
+and dname='SALES';
+
+------q2-------------
+
+
+select ename, sal from emp
+where sal = (select max(remsal) from (select sal as remsal from emp where 
+sal<>(select max(sal) from emp)) );
+
+
+
+
+------q3-----
+select * 
+from 
+emp, 
+(select job as j, min(sal) from emp group by job having min(sal)>2900)
+where job=j;
+
+-----q4-------------
+select to_char(to_date('15-11-1992', 'DD-MM-YYYY'),'DAY') from dual;
+
+------q5----------
+
+select current_date-(   to_date('15-11-1992', 'DD-MM-YYYY')  ) from dual;
+
+--------q6----------
+
+select * from emp e1
+where (select extract(month from hiredate) from emp e2 where e2.empno=e1.empno )=(select extract(month from current_date) from dual) and
+(select extract(year from hiredate ) from emp e3 where e3.empno=e1.empno)=(select extract(year from (select add_months(current_date, -12*5) from dual)) from dual);
+
+
+
+
+//select extract(month from hiredate) from emp;
+//select extract(year from hiredate ) from emp;
+
+
+//select extract(month from current_date) from dual;
+//select extract(year from (select add_months(current_date, -12*5) from dual)) from dual;
+
+-----q7---------
+select sum(sal) from emp
+where deptno=10 
+and job='MANAGER';
+
+------q8--------
+select  lpad(ename,3), reverse(lpad((reverse(ename)),3)) from emp;
+
+
+

@@ -1,0 +1,65 @@
+import java.sql.CallableStatement;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.sql.Types;
+
+public class Ques1 {
+
+	public static void createTable(Connection con) {
+		Statement stmt = null;
+		try {
+			stmt = con.createStatement();
+
+			String query = "create table HarryPotter" + "(Name varchar2(20),"
+					+ "House varchar2(10)," + "Role varchar2(10),"
+					+ "Status varchar2(10)," + "Dies varchar2(4))";
+
+			stmt.executeUpdate(query);
+			System.out.println("Table created");
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+
+			if (stmt != null)
+				try {
+					stmt.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+		}
+	}
+
+	public static void main(String[] args) {
+		Connection con = null;
+
+		try {
+			Class.forName("oracle.jdbc.driver.OracleDriver");
+			String uname = "hr";
+			String password = "hr";
+			String url = "jdbc:oracle:thin:@localhost:1521:orcl";
+			con = DriverManager.getConnection(url, uname, password);
+			createTable(con);
+		} catch (ClassNotFoundException e1) {
+			e1.printStackTrace();
+		} catch (SQLException e) {
+			e.printStackTrace();
+
+		} finally {
+			try {
+
+				if (con != null)
+					con.close();
+			} catch (SQLException e) {
+
+				e.printStackTrace();
+			}
+
+		}
+
+	}
+
+}

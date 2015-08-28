@@ -1,0 +1,72 @@
+package day11;
+
+import java.util.HashSet;
+import java.util.Set;
+
+public class TestHash {
+
+	public static void main(String[] args) {
+		Employee e1=new Employee(101,22,20000);
+		Employee e2=new Employee(102,22,22000);
+		Employee e3=new Employee(103,23,30000);
+		Employee e4=new Employee(102,22,22000);
+		Set<Employee> nameSet=new HashSet<Employee>();
+		nameSet.add(e1);
+		nameSet.add(e2);
+		nameSet.add(e3);
+		nameSet.add(e4);
+		System.out.println(nameSet);
+		
+		
+		Set<Integer> intSet=new HashSet<Integer>();
+		intSet.add(1);
+		intSet.add(2);
+		intSet.add(3);
+		intSet.add(2);
+		System.out.println(intSet);
+		
+		
+		
+	}
+}
+
+
+class Employee{
+	int empid;
+	int age;
+	int salary;
+	public int getEmpid() {
+		return empid;
+	}
+	public void setEmpid(int empid) {
+		this.empid = empid;
+	}
+	public int getAge() {
+		return age;
+	}
+	public void setAge(int age) {
+		this.age = age;
+	}
+	public int getSalary() {
+		return salary;
+	}
+	public void setSalary(int salary) {
+		this.salary = salary;
+	}
+	public Employee(int empid, int age, int salary) {
+		super();
+		this.empid = empid;
+		this.age = age;
+		this.salary = salary;
+	}
+	@Override
+	public String toString() {
+		return "Employee [empid=" + empid + ", age=" + age + ", salary="
+				+ salary + "]";
+	}
+	
+	
+	
+	
+}
+

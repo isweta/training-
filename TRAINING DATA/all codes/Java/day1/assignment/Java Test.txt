@@ -1,0 +1,251 @@
+-----------------------TestApp.java----------------
+package javatest;
+
+import java.util.Scanner;
+
+public class TestApp {
+
+	public static void main(String[] args) {
+
+		Scanner in = new Scanner(System.in);
+		Customer c1 = new DatacardCustomer(1, "A", 10025);
+		CustomerDatabase.addCust(c1);
+		// c1.displayDetails();
+		Customer c2 = new WirelessCustomer(2, "B", 265);
+		CustomerDatabase.addCust(c2);
+		// c2.displayDetails();
+		System.out.println("Enter customer id to display details");
+		int cid = in.nextInt();
+		Customer anyCust = CustomerDatabase.getCust(cid);
+		anyCust.displayDetails();
+
+		EnquiryDatabase.makeEnquiry();
+
+		// suppose cust 1 made an enquiry for type-2 that is download limit
+		EnquiryDatabase.getEnquiry(1, 3);
+		EnquiryDatabase.getEnquiry(1, 2);
+	}
+
+}
+
+
+---------------------CustomerDatabse.java--------------------------------------
+package javatest;
+
+import java.util.HashMap;
+import java.util.HashSet;
+
+public class CustomerDatabase {
+
+	static HashMap<Integer, Customer> allCust = new HashMap<Integer, Customer>();
+
+	// database in which customers are stored, key being custid;
+
+	public static void addCust(Customer c) {
+		allCust.put(c.custNo, c);
+	}
+
+	public static Customer getCust(int cid) {
+		return allCust.get(cid);
+	}
+
+}
+
+abstract class Customer {
+	int custNo;
+	String custName;
+	int speed;
+	int downloadLimit;
+	int currentUsage;
+	int balanceLeft;
+
+	public void displayDetails() {
+		System.out.println("Customer details: " + this.toString());
+
+	}
+
+	public Customer(int custNo, String custName) {
+
+		this.custNo = custNo;
+		this.custName = custName;
+
+	}
+
+	@Override
+	public String toString() {
+		return " Customer [custNo=" + custNo + ", custName=" + custName
+				+ ", speed=" + speed + ", downloadLimit=" + downloadLimit
+				+ ", currentUsage=" + currentUsage + ", balanceLeft="
+				+ balanceLeft;
+	}
+
+}
+
+class DatacardCustomer extends Customer {
+	int dongleID;
+
+	public DatacardCustomer(int custNo, String custName, int dongleID) {
+		super(custNo, custName);
+		this.speed = 500;
+		this.downloadLimit = 70;
+		this.currentUsage = 0;
+		this.balanceLeft = 70;
+		this.dongleID = dongleID;
+	}
+
+	public DatacardCustomer(int custNo, String custName, int speed,
+			int downloadLimit, int dongleID) {
+		super(custNo, custName);
+		this.speed = speed;
+		this.downloadLimit = downloadLimit;
+		this.currentUsage = 0;
+		this.balanceLeft = downloadLimit;
+		this.dongleID = dongleID;
+	}
+
+	public void displayDetails() {
+		super.displayDetails();
+		System.out.println("Dongle ID=" + dongleID);
+
+	}
+
+	@Override
+	public String toString() {
+		return "DatacardCustomer " + super.toString() + " dongleID=" + dongleID
+				+ "]";
+	}
+
+}
+
+class WirelessCustomer extends Customer {
+	int accesPointID;
+
+	public void displayDetails() {
+		super.displayDetails();
+		System.out.println("accessPointID=" + accesPointID);
+
+	}
+
+	public WirelessCustomer(int custNo, String custName, int accessPointID) {
+		super(custNo, custName);
+		this.speed = 500;
+		this.downloadLimit = 120;
+		this.currentUsage = 0;
+		this.balanceLeft = 120;
+		this.accesPointID = accessPointID;
+	}
+
+	public WirelessCustomer(int custNo, String custName, int speed,
+			int downloadLimit, int accesPointID) {
+		super(custNo, custName);
+		this.speed = speed;
+		this.downloadLimit = downloadLimit;
+		this.currentUsage = 0;
+		this.balanceLeft = downloadLimit;
+		this.accesPointID = accesPointID;
+	}
+
+	@Override
+	public String toString() {
+		return "WirelessCustomer: " + super.toString() + " accesPointID="
+				+ accesPointID + "]";
+	}
+
+}
+
+
+----------------------EnquiryDatabase.java-------------------
+
+package javatest;
+
+//can enquire for speed , Download limit , current usage , balance left
+//enquiries searchable by specifying enq id or by specifying customer id and enq type
+
+import java.util.*;
+
+public class EnquiryDatabase {
+	// enquiries stored in hashmap, hashed by key enqid
+
+	static HashMap<Integer, Enquiry> allEnq = new HashMap<Integer, Enquiry>();
+
+	public static void addEnquiry(Enquiry e) {
+		allEnq.put(e.enqId, e);
+	}
+
+	public static Enquiry getEnquiry(int enqId) {
+		return allEnq.get(enqId);
+	}
+
+	public static void getEnquiry(int custId, int enqType) {
+
+		for (Integer enqId : allEnq.keySet()) {
+			if (allEnq.get(enqId).cust.custNo == custId
+					&& allEnq.get(enqId).enqType == enqType) {
+				System.out.println(allEnq.get(enqId));
+				return;
+			}
+		}
+
+		System.out.println("Such an enquiry not found");
+
+	}
+
+	public static void makeEnquiry() {
+		System.out.println("Making an enquiry");
+		Scanner in = new Scanner(System.in);
+		
+		System.out.println("Enter your custId :");
+		int custId = in.nextInt();
+		System.out
+				.println("To know your speed press 1 , Download limit-2 , current usage-3 , balance left-4");
+		int enqType = in.nextInt();
+		int enqId = (int) Math.random() * 1000;
+		Enquiry enq = new Enquiry(enqId, custId, enqType);
+		allEnq.put(enqId, enq);
+		enq.processEnquiry();
+
+	}
+
+}
+
+class Enquiry {
+	int enqId;
+	Customer cust;
+	int enqType;
+
+	public void processEnquiry() {
+		System.out.println("For customer with id " + cust.custNo + " , name "
+				+ cust.custName);
+		switch (enqType) {
+		case 1:
+			System.out.println("Speed is " + cust.speed + " Mbps");
+			break;
+		case 2:
+			System.out.println("Download Limit is " + cust.downloadLimit
+					+ " Gb");
+			break;
+		case 3:
+			System.out.println("Current Usage is " + cust.currentUsage + " Gb");
+			break;
+		case 4:
+			System.out.println("Balance Left is " + cust.balanceLeft);
+
+		}
+
+	}
+
+	public Enquiry(int enqId, int custId, int enqType) {
+		Customer cust = CustomerDatabase.getCust(custId);
+		this.cust = cust;
+		this.enqType = enqType;
+
+		this.enqId = enqId;
+	}
+
+	@Override
+	public String toString() {
+		return "Enquiry [enqId=" + enqId + ", cust=" + cust + ", enqType="
+				+ enqType + "]";
+	}
+
+}

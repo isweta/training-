@@ -1,0 +1,659 @@
+package org.mycompany;
+
+public class Employee {
+
+		String category;		
+
+		void details(){
+			System.out.println("I'm working for my company");
+			
+		}
+}
+
+package org.mycompany;
+
+import org.springframework.beans.factory.BeanFactory;
+import org.springframework.beans.factory.xml.XmlBeanFactory;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.core.io.FileSystemResource;
+
+public class MainProgram {
+
+	
+	public static void main(String[] args) {
+		//BeanFactory bean=new XmlBeanFactory(new FileSystemResource("mybean.xml"));
+		ApplicationContext bean=new ClassPathXmlApplicationContext("mybean.xml");
+		Employee e=(Employee)bean.getBean("employee1");
+		e.details();
+	}
+
+}
+
+<bean id= ..... depends-on="b2,b3" factory-bean= "" factory-method="">
+mybean.xml
+
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN 2.0//EN" "http://www.springframework.org/dtd/spring-beans-2.0.dtd">
+<beans>
+<bean id="employee1" class="org.mycompany.Employee"/>
+</beans>
+
+
+package org.mycompany;
+
+public class Employee {
+
+		String category;
+		
+
+		public String getCategory() {
+			return category;
+		}
+
+
+		public void setCategory(String category) {
+			this.category = category;
+		}
+
+
+		void details(){
+			System.out.println("I'm working for my company");
+			System.out.println("I'm a "+category+" Employee");
+		}
+}
+
+
+mybean.xml
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN 2.0//EN" "http://www.springframework.org/dtd/spring-beans-2.0.dtd">
+<beans>
+<bean id="employee1" class="org.mycompany.Employee">
+<property name="category" value="contract"/>
+</bean>
+</beans>
+
+
+package org.mycompany;
+
+public class Employee {
+
+		String category;
+		
+
+		public Employee(String category) {
+			this.category = category;
+		}
+
+
+		public String getCategory() {
+			return category;
+		}
+
+
+		public void setCategory(String category) {
+			this.category = category;
+		}
+
+
+		void details(){
+			System.out.println("I'm working for my company");
+			System.out.println("I'm a "+category+" Employee");
+		}
+}
+
+
+
+
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN 2.0//EN" "http://www.springframework.org/dtd/spring-beans-2.0.dtd">
+<beans>
+<bean id="employee1" class="org.mycompany.Employee">
+<constructor-arg value="contract"/>
+</bean>
+</beans>
+
+package org.mycompany;
+
+public class Employee {
+
+		String category;
+		int age;
+
+		public Employee(int age) {
+			this.age = age;
+		}
+
+		
+		public Employee(String category) {
+			this.category = category;
+		}
+
+		public Employee(String category, int age) {
+			this.category = category;
+			this.age = age;
+		}
+
+		public String getCategory() {
+			return category;
+		}
+
+
+		public void setCategory(String category) {
+			this.category = category;
+		}
+
+
+		void details(){
+			System.out.println("I'm working for my company");
+			System.out.println("I'm a "+category+" Employee and my age is : "+age);
+		}
+}
+
+
+
+
+mybeans.xml
+
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN 2.0//EN" "http://www.springframework.org/dtd/spring-beans-2.0.dtd">
+<beans>
+<bean id="employee1" class="org.mycompany.Employee">
+<constructor-arg type="java.lang.String" value="contract"/>
+<constructor-arg type="int" value="20"/>
+</bean>
+</beans>
+
+
+
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN 2.0//EN" "http://www.springframework.org/dtd/spring-beans-2.0.dtd">
+<beans>
+<bean id="employee1" class="org.mycompany.Employee">
+<constructor-arg index="0" value="contract"/>
+<constructor-arg index="1" value="20"/>
+</bean>
+</beans>
+
+
+
+package org.mycompany;
+
+public class Address {
+	int doorno;
+	String city;
+	public int getDoorno() {
+		return doorno;
+	}
+	public void setDoorno(int doorno) {
+		this.doorno = doorno;
+	}
+	public String getCity() {
+		return city;
+	}
+	public void setCity(String city) {
+		this.city = city;
+	}
+}
+
+
+package org.mycompany;
+
+public class Employee {
+		
+		String category;
+		int age;
+		Address address1;
+		Address address2;
+		Address address3;
+
+		public int getAge() {
+			return age;
+		}
+
+
+		public void setAge(int age) {
+			this.age = age;
+		}
+
+
+		public Address getAddress1() {
+			return address1;
+		}
+
+
+		public void setAddress1(Address address1) {
+			this.address1 = address1;
+		}
+
+
+		public Address getAddress2() {
+			return address2;
+		}
+
+
+		public void setAddress2(Address address2) {
+			this.address2 = address2;
+		}
+
+
+		public Address getAddress3() {
+			return address3;
+		}
+
+
+		public void setAddress3(Address address3) {
+			this.address3 = address3;
+		}
+
+
+		public Employee(int age) {
+			this.age = age;
+		}
+
+		
+		public Employee(String category) {
+			this.category = category;
+		}
+
+		public Employee(String category, int age) {
+			this.category = category;
+			this.age = age;
+		}
+
+		public String getCategory() {
+			return category;
+		}
+
+
+		public void setCategory(String category) {
+			this.category = category;
+		}
+
+
+		void details(){
+			System.out.println("I'm working for my company");
+			System.out.println("I'm a "+category+" Employee and my age is : "+age);
+			System.out.println("List of MyAddress :\n");
+			System.out.println("Address1 : "+address1.doorno+" "+address1.city);
+			System.out.println("Address2 : "+address2.doorno+" "+address2.city);
+			System.out.println("Address3 : "+address3.doorno+" "+address3.city);
+		}
+}
+
+
+
+
+mybean.xml
+
+
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN 2.0//EN" "http://www.springframework.org/dtd/spring-beans-2.0.dtd">
+<beans>
+<bean id="employee1" class="org.mycompany.Employee">
+<constructor-arg index="0" value="contract"/>
+<constructor-arg index="1" value="20"/>
+<property name="address1" ref="add1"/>
+<property name="address2" ref="add2"/>
+<property name="address3" ref="add3"/>
+</bean>
+<bean id="add1" class="org.mycompany.Address">
+<property name="doorno" value="5"/>
+<property name="city" value="Chennai"/>
+</bean>
+<bean id="add2" class="org.mycompany.Address">
+<property name="doorno" value="6"/>
+<property name="city" value="cochin"/>
+</bean>
+<bean id="add3" class="org.mycompany.Address">
+<property name="doorno" value="7"/>
+<property name="city" value="Delhi"/>
+</bean>
+</beans>
+
+
+
+
+
+mybean.xml
+
+
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN 2.0//EN" "http://www.springframework.org/dtd/spring-beans-2.0.dtd">
+<beans>
+<bean id="employee1" class="org.mycompany.Employee" >
+<constructor-arg index="0" value="contract"/>
+<constructor-arg index="1" value="20"/>
+
+<property name="address1" ref="add1"/>
+
+<property name="address2">
+<bean id="add2" class="org.mycompany.Address">
+<property name="doorno" value="6"/>
+<property name="city" value="cochin"/>
+</bean>
+</property>
+
+<property name="address3">
+<bean id="add3" class="org.mycompany.Address">
+<property name="doorno" value="7"/>
+<property name="city" value="Delhi"/>
+</bean>
+</property>
+</bean>
+<bean id="add1" class="org.mycompany.Address">
+<property name="doorno" value="5"/>
+<property name="city" value="Chennai"/>
+</bean>
+
+
+
+</beans>
+
+
+package org.mycompany;
+
+import java.util.List;
+
+public class Employee {
+		
+		String category;
+		int age;
+		List<Address> addresslist;
+		
+
+		public List<Address> getAddresslist() {
+			return addresslist;
+		}
+
+
+		public void setAddresslist(List<Address> addresslist) {
+			this.addresslist = addresslist;
+		}
+
+
+		public int getAge() {
+			return age;
+		}
+
+
+		public void setAge(int age) {
+			this.age = age;
+		}
+
+	
+		public Employee(int age) {
+			this.age = age;
+		}
+
+		
+		public Employee(String category) {
+			this.category = category;
+		}
+
+		public Employee(String category, int age) {
+			this.category = category;
+			this.age = age;
+		}
+
+		public String getCategory() {
+			return category;
+		}
+
+
+		public void setCategory(String category) {
+			this.category = category;
+		}
+
+
+		void details(){
+			System.out.println("I'm working for my company");
+			System.out.println("I'm a "+category+" Employee and my age is : "+age);
+			System.out.println("List of MyAddress :\n");
+			for(Address adr:addresslist){
+			System.out.println("Address1 : "+adr.doorno+" "+adr.city);
+			}
+		}
+}
+
+
+
+
+
+mybeans.xml
+
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN 2.0//EN" "http://www.springframework.org/dtd/spring-beans-2.0.dtd">
+<beans>
+<bean id="employee1" class="org.mycompany.Employee">
+<constructor-arg index="0" value="contract"/>
+<constructor-arg index="1" value="20"/>
+<property name="addresslist">
+<list>
+<ref bean="add1"/>
+<ref bean="add2"/>
+<ref bean="add3"/>
+</list>
+</property>
+
+</bean>
+<bean id="add1" class="org.mycompany.Address">
+<property name="doorno" value="5"/>
+<property name="city" value="Chennai"/>
+</bean>
+<bean id="add2" class="org.mycompany.Address">
+<property name="doorno" value="6"/>
+<property name="city" value="cochin"/>
+</bean>
+<bean id="add3" class="org.mycompany.Address">
+<property name="doorno" value="7"/>
+<property name="city" value="Delhi"/>
+</bean>
+</beans>
+
+
+
+
+
+
+package org.mycompany;
+
+import java.util.List;
+
+public class Employee {
+	String category;
+	int age;
+	Address address1;
+	Address address2;
+	Address address3;
+
+	public int getAge() {
+		return age;
+	}
+
+
+	public void setAge(int age) {
+		this.age = age;
+	}
+
+
+	public Address getAddress1() {
+		return address1;
+	}
+
+
+	public void setAddress1(Address address1) {
+		this.address1 = address1;
+	}
+
+
+	public Address getAddress2() {
+		return address2;
+	}
+
+
+	public void setAddress2(Address address2) {
+		this.address2 = address2;
+	}
+
+
+	public Address getAddress3() {
+		return address3;
+	}
+
+
+	public void setAddress3(Address address3) {
+		this.address3 = address3;
+	}
+
+
+	public Employee(int age) {
+		this.age = age;
+	}
+
+	
+	public Employee(String category) {
+		this.category = category;
+	}
+
+	public Employee(String category, int age) {
+		this.category = category;
+		this.age = age;
+	}
+
+	public String getCategory() {
+		return category;
+	}
+
+
+	public void setCategory(String category) {
+		this.category = category;
+	}
+
+
+	void details(){
+		System.out.println("I'm working for my company");
+		System.out.println("I'm a "+category+" Employee and my age is : "+age);
+		System.out.println("List of MyAddress :\n");
+		System.out.println("Address1 : "+address1.doorno+" "+address1.city);
+		System.out.println("Address2 : "+address2.doorno+" "+address2.city);
+		System.out.println("Address3 : "+address3.doorno+" "+address3.city);
+	}
+
+
+
+autowire
+
+
+mybean.xml
+
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN 2.0//EN" "http://www.springframework.org/dtd/spring-beans-2.0.dtd">
+<beans>
+<bean id="employee1" class="org.mycompany.Employee" autowire="byName">//byType,constructor for single type or single type constructor respectively
+<constructor-arg index="0" value="contract"/>
+<constructor-arg index="1" value="20"/>
+
+</bean>
+<bean id="address1" class="org.mycompany.Address">
+<property name="doorno" value="5"/>
+<property name="city" value="Chennai"/>
+</bean>
+<bean id="address2" class="org.mycompany.Address">
+<property name="doorno" value="6"/>
+<property name="city" value="cochin"/>
+</bean>
+<bean id="address3" class="org.mycompany.Address">
+<property name="doorno" value="7"/>
+<property name="city" value="Delhi"/>
+</bean>
+</beans>
+
+
+
+
+
+
+
+
+
+<property name="addresslist">
+<list>
+<value>add0</value>    // adding basic types
+<ref bean="add1"/>       // adding reference types
+<ref bean="add2"/>
+<ref bean="add3"/>
+<bean class....                // adding inner beans
+</bean>
+</list>
+</property>
+
+
+
+<property name="addressSet">
+<set>
+<ref bean="add1"/>
+<ref bean="add2"/>
+<value>add3<value/>
+</set>
+</property>.
+
+
+
+<property name="addresslist">
+<map>
+<entry key="1" value="add1"/>
+<entry key="2" value="add2"/>// both key and value are stirngs
+
+<entry key-ref="bean1" value-ref="add3"/>                     value-ref= for reference types
+					     value      = for Non Reference Types
+<entry key="bean1" value-ref="add3"/>
+
+<entry key="3">
+<bean class....
+</bean>
+</entry>
+</map>
+</property>
+
+Properties:
+<property name="addresslist">
+<props>
+<prop key="one">add1</prop>
+<prop key="two">add2</prop>
+<prop key="three">add3</prop>
+</props>
+</property>
+
+
+
+
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd"
+	xmlns:context="http://www.springframework.org/schema/context">
+	
+	<context:component-scan base-package="customer"/>
+	
+	<bean id="customerDAO" class="customer.dao.impl.JdbcCustomerDAO">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+ 
+
+	
+ 	<bean id="dataSource"
+	class="org.springframework.jdbc.datasource.DriverManagerDataSource"
+	autowire="byName">
+ 
+		<property name="driverClassName" value="com.mysql.jdbc.Driver" />
+		<property name="url" value="jdbc:mysql://localhost:3306/test" />
+		<property name="username" value="root" />
+		<property name="password" value="root" />
+	</bean>
+	
+	
+	
+ 
+</beans>

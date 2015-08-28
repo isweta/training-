@@ -1,0 +1,70 @@
+create table salesman
+(sid number,
+sname varchar2(20),
+ncity varchar2(20));
+
+create table orders
+(orderid number,
+sid number,
+city varchar2(20),
+amount number);
+
+insert into salesman
+values
+(1,'Hari', 'Hy');
+
+insert into salesman
+values
+(2,'Rahul', 'Hy');
+
+insert into salesman
+values
+(3,'Rahul', 'Ch');
+
+insert into orders
+values
+(101, 1, 'Ch', 10000);
+
+insert into orders
+values
+(102,1,'Hy', 20000);
+
+insert into orders
+values
+(103,2,'Ch', 80000);
+
+insert into orders
+values
+(104,1,'Hy', 20000);
+
+insert into orders
+values
+(105,1,'Ch', 20000);
+
+insert into orders
+values
+(106, 3, 'Hy', 80000);
+
+
+
+select * from salesman join orders
+on salesman.sid=orders.sid;
+
+select * from
+(select * from salesman join orders
+on salesman.sid=orders.sid) v1
+where v1.ncity=v1.city;
+
+select v1.i, sum(amount) sa from
+(select salesman.sid i , sname, amount, ncity,city from salesman join orders
+on salesman.sid=orders.sid) v1
+where v1.ncity=v1.city
+group by v1.i;
+
+select v2.i, max(v2.sa) from
+(select v1.i, sum(amount) sa from
+(select salesman.sid i , sname, amount, ncity,city from salesman join orders
+on salesman.sid=orders.sid) v1
+where v1.ncity=v1.city
+group by v1.i) v2 group by v2.i;
+

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" id="WebApp_ID" version="2.5">
+  <display-name>StudentDatabase</display-name>
+  <welcome-file-list>
+    <welcome-file>index.html</welcome-file>
+    <welcome-file>index.htm</welcome-file>
+    <welcome-file>index.jsp</welcome-file>
+    <welcome-file>default.html</welcome-file>
+    <welcome-file>default.htm</welcome-file>
+    <welcome-file>default.jsp</welcome-file>
+  </welcome-file-list>
+  <servlet>
+    <description></description>
+    <display-name>MatchNameServlet</display-name>
+    <servlet-name>MatchNameServlet</servlet-name>
+    <servlet-class>MatchNameServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>MatchNameServlet</servlet-name>
+    <url-pattern>/MatchNameServlet</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>DepartmentWiseServlet</display-name>
+    <servlet-name>DepartmentWiseServlet</servlet-name>
+    <servlet-class>DepartmentWiseServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>DepartmentWiseServlet</servlet-name>
+    <url-pattern>/DepartmentWiseServlet</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>GetDepartmentsServlet</display-name>
+    <servlet-name>GetDepartmentsServlet</servlet-name>
+    <servlet-class>GetDepartmentsServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>GetDepartmentsServlet</servlet-name>
+    <url-pattern>/GetDepartmentsServlet</url-pattern>
+  </servlet-mapping>
+</web-app>

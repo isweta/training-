@@ -1,0 +1,62 @@
+package javatest;
+
+public class Databse {
+	
+	public static void main(String[] args) {
+		Customer c1=new DatacardCustomer();
+		c1.displayDetails();
+		Customer c2=new WirelessCustomer();
+		c2.displayDetails();
+		
+		
+	}
+
+}
+
+abstract class Customer{
+	int custNo;
+	String custName;
+	String adr;
+	int speed;
+	int downloadLimit;
+	int currentUsage;
+	int balanceLeft;
+
+	public void displayDetails(){
+		System.out.println("Customer details: "+this.toString());
+		
+		
+	}
+
+	@Override
+	public String toString() {
+		return "Customer [custNo=" + custNo + ", custName=" + custName
+				+ ", adr=" + adr + ", speed=" + speed + ", downloadLimit="
+				+ downloadLimit + ", currentUsage=" + currentUsage
+				+ ", balanceLeft=" + balanceLeft + "]";
+	}	
+
+}
+
+class DatacardCustomer extends Customer{
+	int dongleID;
+
+	public void displayDetails(){
+		super.displayDetails();
+		System.out.println("Dongle ID="+dongleID);
+		
+	}
+
+
+}
+
+class WirelessCustomer extends Customer{
+	int accesPointID;
+	public void displayDetails(){
+		super.displayDetails();
+		System.out.println("accessPointID="+accesPointID);
+		
+	}
+	
+}
+

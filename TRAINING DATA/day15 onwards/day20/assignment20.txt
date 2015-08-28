@@ -1,0 +1,170 @@
+********************MastKalandar---Client using WebService*****************
+
+-----------------Order.jsp----------------------
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+<h1>Mast Kalandar</h1>
+<form action=BillServlet>
+	<h4>Choose Item</h4>
+	<select name="food">
+		<option value="100">Paneer Chili</option>
+		<option value="200">Veg Manchurian</option>
+	</select>
+	
+	<input type="submit" value="Generate Bill"/>
+
+</form>
+
+</body>
+</html>
+
+-----------BillServlet.java---------------------
+import java.io.IOException;
+
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import com.foodpanda.DiscountCalculator;
+import com.foodpanda.DiscountCalculatorService;
+
+/**
+ * Servlet implementation class BillServlet
+ */
+public class BillServlet extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+
+	/**
+	 * @see HttpServlet#HttpServlet()
+	 */
+	public BillServlet() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+	/**
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
+	 *      response)
+	 */
+	protected void doGet(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException {
+		Double bill = Double.parseDouble(request.getParameter("food"));
+
+		// get discount from webservice
+		Double discount;
+		DiscountCalculatorService dcs = new DiscountCalculatorService();
+		DiscountCalculator dc = dcs.getDiscountCalculatorPort();
+		discount = dc.calcDiscount(bill);
+
+		Double finalAmt = bill - discount;
+
+		request.setAttribute("finalAmt", finalAmt);
+		RequestDispatcher rd = request.getRequestDispatcher("Invoice.jsp");
+		rd.forward(request, response);
+	}
+
+	/**
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
+	 *      response)
+	 */
+	protected void doPost(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+	}
+
+}
+
+-----------------------Invoice.jsp------------------------
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+	pageEncoding="ISO-8859-1"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>The Final Amount is: ${requestScope.finalAmt}
+
+</body>
+</html>
+
+
+
+
+============================FoodPanda Providing discount Service==============
+
+--------------------------web.xml------------------
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://java.sun.com/xml/ns/javaee"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+	id="WebApp_ID" version="2.5">
+	<display-name>FoodPandaWebsite</display-name>
+	<welcome-file-list>
+		<welcome-file>index.html</welcome-file>
+		<welcome-file>index.htm</welcome-file>
+		<welcome-file>index.jsp</welcome-file>
+		<welcome-file>default.html</welcome-file>
+		<welcome-file>default.htm</welcome-file>
+		<welcome-file>default.jsp</welcome-file>
+	</welcome-file-list>
+	<listener>
+		<listener-class>com.foodpanda.ApplicationStarter</listener-class>
+	</listener>
+
+</web-app>
+
+
+
+------------------DiscountCalculator.java-------------
+package com.foodpanda;
+
+import javax.jws.WebMethod;
+import javax.jws.WebService;
+
+@WebService
+public class DiscountCalculator {
+
+	@WebMethod
+	public double calcDiscount(double bill) {
+		double discountPercent = 20;
+		double discount = bill * (discountPercent) / 100.0;
+		return discount;
+	}
+}
+--------------------ApplicationStarter.java--------------------
+
+
+package com.foodpanda;
+import javax.servlet.ServletContextEvent;
+import javax.servlet.ServletContextListener;
+import javax.xml.ws.Endpoint;
+
+
+public class ApplicationStarter implements ServletContextListener{
+
+	@Override
+	public void contextDestroyed(ServletContextEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void contextInitialized(ServletContextEvent arg0) {
+		DiscountCalculator c=new DiscountCalculator();
+		String uri = "http://192.168.0.240:1005/FoodPanda/DiscountCalculator";
+		Endpoint.publish(uri, c);
+		System.out.println("Server Started");
+		
+	}
+
+}

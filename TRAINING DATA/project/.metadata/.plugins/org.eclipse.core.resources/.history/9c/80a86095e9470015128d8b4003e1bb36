@@ -1,0 +1,12 @@
+
+public class Circuit {
+	int sourcePort;
+	int destinationPort;
+	int orderId;
+	int customerId;
+	int bandwidthMbps;
+	String status;
+	String dueDate;
+	String modifiedDate;
+	
+}

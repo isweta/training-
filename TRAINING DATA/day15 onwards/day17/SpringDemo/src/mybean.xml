@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN 2.0//EN" "http://www.springframework.org/dtd/spring-beans-2.0.dtd">
+<beans>
+<bean id="employee1" class="org.mycompany.Employee">
+	<constructor-arg  value="contract"/>
+	<constructor-arg value="25"/>
+	<property name="address1" ref="addr1"/>
+</bean>
+<bean id="addr1" class="org.mycompany.Address">
+	<property name="doorno" value="5"/>
+	<property name="city" value="Hyderabad"/>
+</bean>
+</beans>

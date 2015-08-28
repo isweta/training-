@@ -1,0 +1,14 @@
+Read the following employee xml data(write the xsd as well) using a java program(use JAX-P API)
+
+
+< ?xml version="1.0" encoding="UTF-8"?>
+< ns1:employee
+    xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'
+    xmlns:ns1='http://xml.netbeans.org/schema/emp'
+    xsi:schemaLocation='http://xml.netbeans.org/schema/emp emp.xsd'>
+    <ns1:name>chandra</ns1:name>
+    <ns1:id>6</ns1:id>
+    <ns1:salary>104.3</ns1:salary>
+
+< /ns1:employee> 
+
