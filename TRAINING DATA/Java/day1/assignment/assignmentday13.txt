@@ -1,0 +1,454 @@
+----db creation----------
+create table studentRecords
+(sId number,
+ sName varchar2(20),
+deptName varchar2(20),
+totCredits number);
+
+--------------------------
+public class Student {
+	int sId;
+	String sName;
+	String deptName;
+	int totCredits;
+
+	public int getsId() {
+		return sId;
+	}
+
+	public void setsId(int sId) {
+		this.sId = sId;
+	}
+
+	public String getsName() {
+		return sName;
+	}
+
+	public void setsName(String sName) {
+		this.sName = sName;
+	}
+
+	public String getDeptName() {
+		return deptName;
+	}
+
+	public void setDeptName(String deptName) {
+		this.deptName = deptName;
+	}
+
+	public int getTotCredits() {
+		return totCredits;
+	}
+
+	public void setTotCredits(int totCredits) {
+		this.totCredits = totCredits;
+	}
+
+	@Override
+	public String toString() {
+		return "Student [sId=" + sId + ", sName=" + sName + ", deptName="
+				+ deptName + ", totCredits=" + totCredits + "]";
+	}
+
+	public Student(int sId, String sName, String deptName, int totCredits) {
+		super();
+		this.sId = sId;
+		this.sName = sName;
+		this.deptName = deptName;
+		this.totCredits = totCredits;
+	}
+
+}
+-------------------------------------------------------
+import java.sql.Connection;
+import java.util.List;
+
+public interface DAOStudent {
+	public Connection createConnection();
+
+	public List<Student> matchNameQuery(String str);
+
+	public List<Student> matchDeptQuery(String deptNameStr);
+
+	public List<String> getDepartmentsQuery();
+
+}
+------------------------------------------
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+
+public class DAOStudentOracle implements DAOStudent {
+
+	public Connection createConnection() {
+		Connection con = null;
+		try {
+			Class.forName("oracle.jdbc.driver.OracleDriver");
+			String uname = "hr";
+			String password = "hr";
+			String url = "jdbc:oracle:thin:@localhost:1521:orcl";
+			con = DriverManager.getConnection(url, uname, password);
+			return con;
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+
+		}
+		return con;
+	}
+
+	public List<Student> matchNameQuery(String str) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		List<Student> list = null;
+
+		try {
+			con = createConnection();
+			String query = "select * from studentRecords where sname like '%"
+					+ str + "%'";
+			pstmt = con.prepareStatement(query);
+			rs = pstmt.executeQuery();
+			list = new ArrayList<Student>();
+			while (rs.next()) {
+				int sId = rs.getInt("sId");
+				String sname = rs.getString("sname");
+				
+				String deptName = rs.getString("deptName");
+				int totCredits = rs.getInt("totCredits");
+				Student newStud = new Student(sId, sname, deptName, totCredits);
+				list.add(newStud);
+
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+
+			try {
+				if (pstmt != null)
+					pstmt.close();
+				if (con != null)
+					con.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return list;
+
+	}
+
+	public List<Student> matchDeptQuery(String deptNameStr) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		List<Student> list = null;
+
+		try {
+			con = createConnection();
+			String query = "select * from studentRecords where deptName ='"
+					+ deptNameStr + "'";
+			pstmt = con.prepareStatement(query);
+			rs = pstmt.executeQuery();
+			list = new ArrayList<Student>();
+			while (rs.next()) {
+				int sId = rs.getInt("sId");
+				String sname = rs.getString("sname");
+
+				String deptName = rs.getString("deptName");
+				int totCredits = rs.getInt("totCredits");
+				Student newStud = new Student(sId, sname, deptName, totCredits);
+				list.add(newStud);
+
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+
+			try {
+				if (pstmt != null)
+					pstmt.close();
+				if (con != null)
+					con.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return list;
+
+	}
+
+	public List<String> getDepartmentsQuery() {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		List<String> list = null;
+
+		try {
+			con = createConnection();
+			String query = "select distinct deptName from studentRecords";
+			pstmt = con.prepareStatement(query);
+			rs = pstmt.executeQuery();
+			list = new ArrayList<String>();
+			while (rs.next()) {
+				String deptName = rs.getString("deptName");
+				list.add(deptName);
+
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+
+			try {
+				if (pstmt != null)
+					pstmt.close();
+				if (con != null)
+					con.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return list;
+
+	}
+
+}
+-------------------------------------------
+
+-----------form1.html------------
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+	<form method="post" action="MatchNameServlet">
+		<table border=2 align="centre">
+			<tr>
+				<td>Enter the string to match names</td>
+				<td><input type="text" name="strText" /></td>
+			<tr>
+
+				<td><input type="submit" value="submit" /></td>
+			</tr>
+		</table>
+	</form>
+
+</body>
+</html>
+-----------MatchNameServlet.java--------
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.Iterator;
+import java.util.List;
+
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+/**
+ * Servlet implementation class MatchNameServlet
+ */
+public class MatchNameServlet extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+
+	/**
+	 * @see HttpServlet#HttpServlet()
+	 */
+	public MatchNameServlet() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+	/**
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
+	 *      response)
+	 */
+	protected void doGet(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+	}
+
+	/**
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
+	 *      response)
+	 */
+	protected void doPost(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException {
+		PrintWriter out = response.getWriter();
+		out.println("<HTML>");
+		out.println("<HEAD><TITLE>Student Records</TITLE></HeAd>");
+		out.println("<BODY>");
+		String str = request.getParameter("strText");
+		DAOStudent dstud = new DAOStudentOracle();
+
+		List<Student> list = dstud.matchNameQuery(str);
+		for (Iterator<Student> it = list.iterator(); it.hasNext();) {
+			System.out.println(it.next());
+		}
+
+		out.println("</BODY>");
+		out.println("</HTML>");
+		out.close();
+	}
+
+}
+---------------
+
+
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.Iterator;
+import java.util.List;
+
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+/**
+ * Servlet implementation class DepartmentWiseServlet
+ */
+public class DepartmentWiseServlet extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+       
+    /**
+     * @see HttpServlet#HttpServlet()
+     */
+    public DepartmentWiseServlet() {
+        super();
+        // TODO Auto-generated constructor stub
+    }
+
+	/**
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+	}
+
+	/**
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+		PrintWriter out = response.getWriter();
+		out.println("<HTML>");
+		out.println("<HEAD><TITLE>Student Records</TITLE></HeAd>");
+		out.println("<BODY>");
+		
+		DAOStudent dstud = new DAOStudentOracle();
+
+		List<String> list = dstud.getDepartmentsQuery();
+		out.println("<Form method=post action=GetDepartmentsServlet>");
+		out.println("<select name=\"dept\">");
+		for (Iterator<String> it = list.iterator(); it.hasNext();) {
+			out.println("<option>");
+			out.println(it.next());
+			out.println("</option>");
+			
+		}
+		
+		out.println("</select>");
+		out.println("<input type=\"submit\" value=\"submit\" />");
+		out.println("</Form>");
+	}
+
+}
+
+-------------------------------------------------------------
+
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.Iterator;
+import java.util.List;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+/**
+ * Servlet implementation class GetDepartmentsServlet
+ */
+public class GetDepartmentsServlet extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+
+	/**
+	 * @see HttpServlet#HttpServlet()
+	 */
+	public GetDepartmentsServlet() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+	/**
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
+	 *      response)
+	 */
+	protected void doGet(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+	}
+
+	/**
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
+	 *      response)
+	 */
+	protected void doPost(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException {
+		PrintWriter out = response.getWriter();
+		out.println("<HTML>");
+		out.println("<HEAD><TITLE>Student Records</TITLE></HeAd>");
+		out.println("<BODY>");
+		String str = request.getParameter("dept");
+		DAOStudent dstud = new DAOStudentOracle();
+
+		List<Student> list = dstud.matchDeptQuery(str);
+
+		for (Iterator<Student> it = list.iterator(); it.hasNext();) {
+
+			out.println(it.next());
+
+		}
+
+		out.println("</BODY>");
+		out.println("</HTML>");
+		out.close();
+	}
+
+}
+------------------------------------------------------------
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+	
+	<form method="post" action="DepartmentWiseServlet">
+		<table border=2 align="centre">
+
+			<tr>
+
+				<td><input type="submit" value="submit" /></td>
+			</tr>
+		</table>
+	</form>
+</body>
+</html>
+

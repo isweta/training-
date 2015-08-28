@@ -1,0 +1,370 @@
+create table account_info_table
+(accno number,
+balance number);
+
+create table bankusertransaction
+(accno number,
+amount number,
+trantype varchar2(20));
+
+insert into account_info_table
+values
+(1, 10);
+
+
+package bank;
+
+public class AccountBean {
+	int accNo;
+	double currBal;
+	public int getAccNo() {
+		return accNo;
+	}
+	public void setAccNo(int accNo) {
+		this.accNo = accNo;
+	}
+	public double getCurrBal() {
+		return currBal;
+	}
+	public void setCurrBal(double currBal) {
+		this.currBal = currBal;
+	}
+
+}
+
+
+
+
+
+-----------------------------------------------
+package bank;
+public class AccountOperation {
+		int accNo;
+		String tranType;
+		double amount;
+		public int getAccNo() {
+			return accNo;
+		}
+		public void setAccNo(int accNo) {
+			this.accNo = accNo;
+		}
+		public String getTranType() {
+			return tranType;
+		}
+		public void setTranType(String tranType) {
+			this.tranType = tranType;
+		}
+		public double getAmount() {
+			return amount;
+		}
+		public void setAmount(double amount) {
+			this.amount = amount;
+		}
+		
+		
+}
+
+---------------------------
+
+package bank;
+
+
+import java.sql.Connection;
+import java.util.List;
+
+public interface DAOBank {
+	public Connection createConnection();
+
+	public double getBalanceQuery(int accNo);
+
+}
+---------------------------------------
+package bank;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+
+public class DAOBankOracle implements DAOBank {
+
+	public Connection createConnection() {
+		Connection con = null;
+		try {
+			Class.forName("oracle.jdbc.driver.OracleDriver");
+			String uname = "hr";
+			String password = "hr";
+			String url = "jdbc:oracle:thin:@localhost:1521:orcl";
+			con = DriverManager.getConnection(url, uname, password);
+			return con;
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+
+		}
+		return con;
+	}
+
+	public double getBalanceQuery(int accNo) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		double currBal = 0.0;
+
+		try {
+			con = createConnection();
+			String query = "select balance from account_info_table where accNo="
+					+ accNo;
+			pstmt = con.prepareStatement(query);
+
+			rs = pstmt.executeQuery();
+			while (rs.next()) {
+				currBal = Double.parseDouble(rs.getString("balance"));
+
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+
+			try {
+				if (pstmt != null)
+					pstmt.close();
+				if (con != null)
+					con.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return currBal;
+
+	}
+
+}
+--------------------------------------------------
+package bank;
+
+import java.io.IOException;
+import java.util.Iterator;
+import java.util.List;
+
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+/**
+ * Servlet implementation class OperationServlet
+ */
+public class OperationServlet extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+
+	/**
+	 * @see HttpServlet#HttpServlet()
+	 */
+	public OperationServlet() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+	/**
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
+	 *      response)
+	 */
+	protected void doGet(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException {
+		String accNo = request.getParameter("accNo");
+		String accOp = request.getParameter("accOp");
+		HttpSession hs = request.getSession();
+		hs.setAttribute("accNo", accNo);
+		if (accOp.equals("MiniStatement")) {
+			AccountBean accOb = new AccountBean();
+			accOb.setAccNo(Integer.parseInt(accNo));
+			RequestDispatcher rd = request
+					.getRequestDispatcher("StatementServlet");
+			request.setAttribute("acc", accOb);
+			rd.forward(request, response);
+		} else {
+			AccountOperation accOpOb = new AccountOperation();
+			accOpOb.setAccNo(Integer.parseInt(accNo));
+			RequestDispatcher rd = request
+					.getRequestDispatcher("TransactionServlet");
+			request.setAttribute("accOp", accOpOb);
+			rd.forward(request, response);
+		}
+
+	}
+
+	/**
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
+	 *      response)
+	 */
+	protected void doPost(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+	}
+
+}
+-----------------------------------------------------------
+package bank;
+
+
+
+import java.io.IOException;
+import java.util.List;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+/**
+ * Servlet implementation class StatementServlet
+ */
+public class StatementServlet extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+       
+    /**
+     * @see HttpServlet#HttpServlet()
+     */
+    public StatementServlet() {
+        super();
+        // TODO Auto-generated constructor stub
+    }
+
+	/**
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		String accNo = request.getParameter("accNo");
+		DAOBank dbank = new DAOBankOracle();
+		double currBal = dbank.getBalanceQuery(Integer.parseInt(accNo));
+		AccountBean acc=(AccountBean) request.getAttribute("acc");
+		acc.setCurrBal(currBal);
+		response.sendRedirect("MiniStatement.jsp");
+	}
+
+	/**
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+	}
+
+}
+----------------------------------------------------
+package bank;
+
+import java.io.IOException;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+/**
+ * Servlet implementation class TransactionServlet
+ */
+public class TransactionServlet extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+
+	/**
+	 * @see HttpServlet#HttpServlet()
+	 */
+	public TransactionServlet() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+	/**
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
+	 *      response)
+	 */
+	protected void doGet(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+	}
+
+	/**
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
+	 *      response)
+	 */
+	protected void doPost(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+	}
+
+}
+----------------------------------------------
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+	
+	<form action="OperationServlet">
+		
+		Account No.<input type="text" name="accNo"><br>
+		Choose Action<select name='accOp'>
+		<option>MiniStatement</option>
+		<option>Transaction</option>
+		</select>
+		<input type="submit" >
+	</form>
+</body>
+</html>
+
+----------------------------------------------
+<%@page isELIgnored="false"%>
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+	
+	 <table>
+            <tr>
+                <td>Account No</td>
+                <td> : </td>
+                <td> ${requestScope.acc.AccNo} </td>
+            </tr>
+            <tr>
+                <td>Current Balance</td>
+                <td> : </td>
+                <td> ${requestScope.acc.currBal} </td>
+                </tr>
+       </table>     
+</body>
+</html>
+
+--------------------------------------
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+	<form action="TransactionServlet">
+		Transaction type<select name="ttype"><option>Deposit</option><option>Withdraw</option></select>
+		Amount<input type="text" name="amt">
+		<input type="submit" >
+	</form>
+</body>
+</html>

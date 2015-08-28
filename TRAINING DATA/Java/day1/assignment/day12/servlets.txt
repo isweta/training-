@@ -1,0 +1,56 @@
+public interface Servlet{
+
+	void init(ServletConfig config);
+	void destroy();
+	void service(ServletRequest req, ServletResponse res);
+
+
+}
+
+interface ServletConfig{
+	String getInitParameter(String name);
+	ServletContext getServletContext();
+}
+
+
+
+public abstract class HttpServlet implements Servlet,ServletConfig{
+	ServletConfig config;
+	
+	void init(ServletConfig config){
+		this.config=configl
+		init();
+	}
+
+	void init(){
+	}
+
+	ServletCOnfig getServletConfig(){
+		return config;
+	}
+	
+	String getInitParameter(String name){
+	}
+	ServletContext getServletContext(){}
+	
+	void service(ServletRequest req, ServletResponse res){
+		if(req.method()=="GET")
+			doGet((HttpServletRequest) req, (HttpServletResponse) res);
+		else if(req.method()=="Post")
+			doPost((HttpServletRequest) req, (HttpServletResponse) res);
+	}
+
+	void doGet(HttpServletRequest req, HttpServletResponse res){};
+	void doPost(HttpServletRequest req, HttpServletResponse res){};
+
+	void destroy(){}
+}
+
+
+
+void method(Servlet ser){
+	ser.service(sereq, serres);
+}
+
+method(new FTPServlet());
+method(new HttpServlet());

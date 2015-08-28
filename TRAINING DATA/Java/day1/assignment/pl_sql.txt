@@ -1,0 +1,302 @@
+set serveroutput on
+
+Begin
+DBMS_OUTPUT.PUT_LINE('Hello World');
+END;
+/
+--------------------------------------------------------------
+begin
+dbms_output.put_line('The time now is: ');
+dbms_output.put_line(sysdate);
+end;
+/
+--------------------------------------------------------------
+begin
+dbms_output.put_line('The time now is: ' || sysdate);
+end;
+/
+--------------------------------------------------------------
+begin
+dbms_output.put_line('The time now is: ');
+dbms_output.put_line(to_char(sysdate,'MM/DD/YYYY'));
+end;
+/
+--------------------------------------------------------------
+declare
+A number(6);
+B number(6);
+begin
+A :=23;
+B :=A * 5;
+If A<B then
+dbms_output.put_line('Ans :' || A || 'is less than ' || B);
+END if;
+end;
+/
+--------------------------------------------------------------
+
+declare
+A number(6);
+B number(6);
+begin
+A :=23;
+B :=A / 5;
+If A<B then
+dbms_output.put_line('Ans :' || A || 'is less than ' || B);
+else
+dbms_output.put_line('Ans :' || B || 'is less than ' || A);
+END if;
+end;
+/
+--------------------------------------------------------------
+declare
+	I number(6);
+begin
+	i :=1;
+	loop
+		dbms_output.put_line(i);
+		i := i +1;
+		if(i >10) then
+			exit;
+		end if;
+	end loop;
+end;
+/
+--------------------------------------------------------------
+declare i number(6);
+begin i :=1;
+for i in 1..10
+loop
+dbms_output.put_line(i);
+end loop;
+end;
+/
+--------------------------------------------------------------
+
+create or replace
+function add_two(a int, b int) return int is
+begin
+return (A+b);
+end;
+/
+
+
+select add_two(12,34) from dual;
+
+dbms_output.put_line(add(12,35));
+--------------------------------------------------------------
+
+create or replace
+procedure sum_Ab( a int, b int, c out int) is
+begin
+c:=a+b;
+end;
+/
+
+declare
+r int;
+begin
+sum_Ab(2,7,r);
+dbms_output.put_line('sum : ' || r);
+end;
+/
+
+--------------------------------------------------------------	
+create or replace
+procedure doublelen(n in out int) is
+begin
+n :=n*2;
+end;
+/
+
+declare r int;
+
+begin
+r :=7;
+dbms_output.put_line('before' || R);
+doublelen(r);
+dbms_output.put_line('after' || R);
+end;
+/
+
+
+
+create table product
+(product_id number(6),
+description varchar2(10),
+price number(6,2)
+);
+
+
+insert into product
+values
+(1, 'tv', 199.99);
+
+
+insert into product
+values
+(2, 'vcr', 799.98);
+
+
+declare
+	name product.description%type;
+	amount product.price%type;
+begin
+	select description, price into name,amount
+		from product where product_id=2;
+	dbms_output.put_line('price of '||name ||'is '|| amount);
+end;
+/
+--------------------------------------------------------
+declare
+	p product%rowtype;
+	cursor productcurs is
+		select * from product;
+
+begin
+	open productcurs;
+	loop
+		fetch productcurs into p;
+		exit when productcurs%notfound;
+		dbms_output.put_line('price of ' || p.description || ' is ' || p.price);
+	end loop;
+	close productcurs;
+end;
+/ 
+-----------------------------------------------------------
+declare
+	p product%rowtype;
+	cursor productcurs(pid number) is
+		select * from product where product_id=pid;
+
+begin
+	open productcurs(2);
+	loop
+		fetch productcurs into p;
+		exit when productcurs%notfound;
+		dbms_output.put_line('price of ' || p.description || ' is ' || p.price);
+	end loop;
+	close productcurs;
+end;
+/ 
+---------------------------------
+declare
+	p product%rowtype;
+	cursor productcurs(pid number) is
+		select * from product where product_id=pid ;
+
+begin
+	--open productcurs(2);
+	for p in productcurs(2) loop
+		dbms_output.put_line('price of ' || p.description || ' is ' || p.price);
+	end loop;
+	--close productcurs;
+end;
+/
+
+------------------------------------------------------
+
+select employee_id, salary from employees
+where employee_id<=110;
+
+declare
+	e employees%rowtype;
+	cursor empcurs(eid number) is
+		select * from employees where employee_id<=eid;
+begin
+	for e in empcurs(105) loop
+		update employees
+		set e.salary=(1.1)*e.salary;
+	end loop;
+end;
+/
+
+this doesnt work because the for loop will be perfromed for all records in cursor , i.e 5 times but it willexecute the state,ent after cursor as it is;
+
+
+update employees
+		set salary=salary/((1.1)*(1.1)*(1.1)*(1.1));
+
+update employees
+		set salary=salary/(9.9*1.1);
+------------------------------------------------------------------------------------------------------------
+
+declare 
+	sal employees.salary%type;
+begin
+	select salary into sal
+	from employees
+	where employee_id=555;
+
+
+exception
+
+when no_data_found then
+dbms_output.put_line('No data is found');
+
+when too_many_rows then
+dbms_output.put_line('too may rows');
+
+end;
+/
+
+-----------------------------------------------------------------------------------------------------------
+declare 
+	sal employees.salary%type;
+begin
+	select salary into sal
+	from employees
+	where employee_id=555;
+
+
+exception
+
+
+when too_many_rows then
+dbms_output.put_line('too may rows');
+
+when others then
+	if(sqlcode=100) then
+	dbms_output.put_line('No data is found');
+	end if;
+
+end;
+/
+
+---------------------------------------------------------------------------------------
+declare 
+	age number :=17;
+	Invalid_age exception;
+begin
+	if(age<18) then
+	 raise invalid_Age;
+	else
+		dbms_output.put_line('Eligible to vote');
+	end if;
+
+exception
+	when invalid_age then
+		dbms_output.put_line('not eligible to vote');
+end;
+
+
+----------------------------------------------------
+declare 
+	sal employees.salary%type;
+	DATA_NOT_AVAILABLE EXCEPTION;
+	PRAGMA EXCEPTION_INIT(DATA_NOT_AVAILABLE,100);
+begin
+	select salary into sal
+	from employees
+	where employee_id=555;
+
+
+exception
+
+when DATA_NOT_AVAILABLE then
+	
+	dbms_output.put_line('No data is found');
+	
+
+end;
+/

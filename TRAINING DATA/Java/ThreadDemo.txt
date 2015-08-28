@@ -1,0 +1,136 @@
+ProducerConsumer
+
+
+public class ProducerConsumerTest {
+    public static void main(String[] args) {
+        Inventory c = new Inventory();
+        Producer p1 = new Producer(c);
+        Consumer c1 = new Consumer(c);
+         p1.start();       
+        c1.start();         
+        }
+}
+class Inventory {
+    private int contents;
+    private boolean available = false;
+
+    public synchronized int get() {
+        while (available == false) {
+            try {            	
+                wait();                
+            } catch (InterruptedException e) { }
+        }
+        available = false;
+        System.out.println("get"+contents);
+       notify();
+       
+       return contents;
+    }
+
+    public synchronized void put(int value) {
+        while (available == true) {
+            try {
+                wait();
+                } catch (InterruptedException e) { }
+        }
+        contents = value;
+        System.out.println("put"+contents);
+        available = true;
+        notify();
+          }
+}
+
+class Producer extends Thread {
+    private Inventory inventory;
+    public Producer(Inventory c) {
+        inventory = c;       
+    }
+
+    public void run() {
+        for (int i = 0; i < 10; i++) {
+        	try {
+        		sleep((int)(Math.random()*1000));
+                //sleep(500);
+            } catch (InterruptedException e) { }
+            inventory.put(i);
+           
+            
+        }
+    }
+}
+class Consumer extends Thread {
+    private Inventory inventory;
+   
+
+    public Consumer(Inventory c) {
+        inventory = c;
+       
+    }
+
+    public void run() {
+        int value = 0;
+        for (int i = 0; i < 10; i++) {
+        	try {
+                sleep((int)Math.random()*1000);
+                } catch (InterruptedException e) { }
+            value = inventory.get();
+            
+            
+        }
+    }
+}
+
+
+
+Synchronized Keyword
+
+
+
+	import java.util.*;
+	 public class SynchronizeThread {
+	 public static void main(String[] args){
+	 Account acc=new Account();
+	 AtmMachine t1=new AtmMachine(acc);
+	 EBanking t2=new EBanking(acc);
+	 t1.start();
+	 t2.start();
+	 
+	 }}
+	 class Account{
+		 int balance=5000;
+ synchronized void ATMWithdraw(int amt){
+	 //synchronized(this){		
+	 if(balance-amt>=0){
+				try{ Thread.sleep(100);}catch(Exception e){}
+				 balance=balance-amt;
+				 System.out.println("Got money from ATM:\n Current Balance:"+balance);
+				 }
+			 else{System.out.println("Insufficient Balance");}
+	 //}//end of Synchronized
+		 }
+synchronized void ebankWithdraw(int amt){
+	//synchronized(this) {		
+	if(balance-amt>=0){
+				 try{ Thread.sleep(100);}catch(Exception e){}
+				 balance=balance-amt;
+				 System.out.println("Got money from e-banking:\n Current Balance:"+balance);
+				 }
+			 else{System.out.println("Insufficient Balance");} 
+	//}//end of synchronized
+		 }
+	 }
+	 
+	 class AtmMachine extends Thread{
+		 Account acc;
+		 AtmMachine(Account acc){ this.acc=acc; }
+		public void run(){acc.ATMWithdraw(5000);} 
+	 }
+	 class EBanking extends Thread{
+		 Account acc;
+		 EBanking(Account acc){	 this.acc=acc; }
+		public void run(){	acc.ebankWithdraw(5000);
+		} 
+	 }
+
+
+

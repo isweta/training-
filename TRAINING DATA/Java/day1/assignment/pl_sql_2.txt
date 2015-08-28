@@ -1,0 +1,230 @@
+create or replace package sal_package
+is
+
+	g_sal number :=0;
+	
+	function validate_sal(p_sal in number ) return boolean;
+
+	procedure reset_sal(p_sal in number);
+
+end sal_package;
+/
+
+create or replace package body sal_package
+is
+
+	function validate_sal(p_sal in number)
+	return boolean
+	is
+	
+		v_max_sal number;
+		begin
+			select max(salary) into v_max_sal from emp1;
+			if p_sal>v_max_sal then 
+				return (false);
+			else 
+				return (true);
+			end if;
+	end validate_sal;
+
+
+	procedure reset_sal(p_sal in number)
+	is
+		begin
+			if validate_sal(p_sal) then
+				g_sal :=p_sal;
+			end if;
+			dbms_output.put_line(g_sal);
+	
+	end reset_sal;
+
+end sal_package;
+/
+
+------------------------------------------------------------------------
+
+create table emp1
+( empno number,
+ename varchar2(10),
+salary number);
+
+insert into emp1
+values
+(&empno, &ename, &salary);
+<eneter>
+ / to get the prompt again
+
+call sal_package.reset_sal(20000);
+
+----------------------------------------------------------------------
+create or replace package pay_package
+is
+	procedure payslip(eid emp.empno%type);
+	
+	procedure factorial(num number);
+	
+	
+end pay_package;
+/
+
+
+create or replace package body pay_package
+is
+	 
+	procedure factorial(num number) is
+		i number;
+		pro number;
+		begin
+			i:=1;
+			pro:=1;
+			loop
+				pro:=pro*i;
+				exit when i=num;
+				i:=i+1;
+			end loop;
+			dbms_output.put_line('Factorial of '||num||' is: '||pro);
+	end factorial;
+
+	procedure payslip(eid emp.empno%type) is
+		eno emp.empno%type;
+		name emp.ename%type;
+		salary emp.sal%type;
+		hra emp.sal%type;
+		da emp.sal%type;
+		pf emp.sal%type;
+		it emp.sal%type;
+		deductions emp.sal%type;
+		gross emp.sal%type;
+		net emp.sal%type;
+		
+		begin
+			select empno, ename, sal into eno, name, salary
+			from emp 
+			where empno=eid;
+			hra :=0.1*salary;
+			da :=0.2*salary;
+			pf :=0.08*salary;
+			it :=0.05*salary;
+			deductions :=pf+it;
+			gross :=salary+hra+da+deductions;
+			net :=gross-deductions;
+			dbms_output.put_line('Payslip of Employee with id: ' || eno ||' name: '|| name);
+			dbms_output.put_line('Basic salary: ' || salary);
+			dbms_output.put_line('HRA: ' || hra);
+			dbms_output.put_line('DA: '|| da);
+			dbms_output.put_line('PF: '||pf);
+			dbms_output.put_line('IT: '||it);
+			dbms_output.put_line('Deductions: '||deductions);
+			dbms_output.put_line('Gross Salary: '|| gross);
+			dbms_output.put_line('Net Salary: '|| net);
+	end payslip;
+
+
+
+end pay_package;
+/
+
+
+----------------------------------------------------------
+create or replace trigger restrict_sal
+	before insert or update of salary on emp1
+	for each row
+	begin
+		if :new.salary<10000 then
+			raise_Application_error (-20001, 'EMployee cannot earn this amount');
+		end if;
+	end;
+	/
+
+
+insert into emp1
+values
+(104, 'sourav', 9000);
+
+insert into emp1
+            *
+ERROR at line 1:
+ORA-20001: EMployee cannot earn this amount
+ORA-06512: at "SCOTT.RESTRICT_SAL", line 3
+ORA-04088: error during execution of trigger 'SCOTT.RESTRICT_SAL'
+
+
+SQL> update emp1
+  2  set salary=8000
+  3  where empno=1;
+
+0 rows updated.
+
+SQL> update emp1
+  2  set salary=8000
+  3  where empno=101;
+update emp1
+       *
+ERROR at line 1:
+ORA-20001: EMployee cannot earn this amount
+ORA-06512: at "SCOTT.RESTRICT_SAL", line 3
+ORA-04088: error during execution of trigger 'SCOTT.RESTRICT_SAL'
+
+
+-----------------------------------------------------------------------------
+
+create or replace trigger sal_inc
+	before update of salary on emp1
+	for each row
+		begin
+			if :new.salary- :old.salary >5000 then
+				raise_Application_error(-20002, 'Increment :' ||(:new.salary- :old.salary )||' cannot exceed INR 5000' );
+			end if;
+		end;
+/
+
+
+update emp1
+set salary =40000
+where salary=30000;
+
+
+update emp1
+set salary=50000
+where empno<=102;
+
+-------------------------------------------------------------------------------------
+create or replace trigger secure_emp
+	before insert on emp1
+	begin
+		if(to_char(sysdate, 'DY') in ('SAT', 'SUN')) or
+		(to_Char(sysdate, 'HH24:MI') between '08:00' and '18:00')
+		then
+			raise_Application_error(-20500, 'Only after business hour');
+		end if;
+	end;
+/
+
+insert into emp1
+values
+(105, 'Saurav', 2000);
+
+-------------------------------------------------------------------------------
+create or replace trigger restrict_sal
+	before insert or update of salary on emp1
+	for each row
+	begin
+		if :new.salary<10000 then
+			dbms_output.put_line( 'EMployee cannot earn this amount');
+		end if;
+	end;
+	/
+
+create or replace trigger secure_emp
+	before insert on emp1
+	begin
+		if(to_char(sysdate, 'DY') in ('SAT', 'SUN')) or
+		(to_Char(sysdate, 'HH24:MI') between '08:00' and '18:00')
+		then
+			dbms_output.put_line('Only after business hour');
+		end if;
+	end;
+/
+
+
+

@@ -1,0 +1,29 @@
+create table HarryPotter(Name varchar(25),	House varchar(25),Role varchar(25),	Status varchar(25),	Dies varchar(25));
+
+
+
+insert into HarryPotter values(	'Harry Potter',	'Gryffindor ',	'Student',	'Self',	'No'	);
+insert into HarryPotter values(	'Ginny Weasley',	'Gryffindor ',	'Student',	'Friend',	'No'	);
+insert into HarryPotter values(	'Ron Weasley',	'Gryffindor ',	'Student',	'Friend',	'No'	);
+insert into HarryPotter values(	'Hermione Granger',	'Gryffindor ',	'Student',	'Friend',	'No'	);
+insert into HarryPotter values(	'Neville Longbottom',	'Gryffindor ',	'Student',	'Friend',	'No'	);
+insert into HarryPotter values(	'Oliver Wood',	'Gryffindor ',	'Student',	'Friend',	'No'	);
+insert into HarryPotter values(	'Luna Lovegood',	'Ravenclaw',	'Student',	'Friend',	'No'	);
+insert into HarryPotter values(	'Cho Chang',	'Ravenclaw',	'Student',	'Friend',	'No'	);
+insert into HarryPotter values(	'Cedric Diggory',	'Hufflepuff',	'Student',	'Friend',	'Yes'	);
+insert into HarryPotter values(	'Hannah Abbot',	'Hufflepuff',	'Student',	'Friend',	'No'	);
+insert into HarryPotter values(	'Draco Malfoy',	'Slytherin',	'Student',	'Enemy',	'No'	);
+insert into HarryPotter values(	'Vincent Crabbe',	'Slytherin',	'Student',	'Enemy',	'Yes'	);
+insert into HarryPotter values(	'Gregory Goyle',	'Slytherin',	'Student',	'Enemy',	'No'	);
+insert into HarryPotter values(	'Penelope Clearwater',	'Slytherin',	'Student',	'Enemy',	'No'	);
+insert into HarryPotter values(	'Albus Dumbledore',	'Gryffindor ',	'Faculty',	'Friend',	'Yes'	);
+insert into HarryPotter values(	'Severus Snape',	'Slytherin',	'Faculty',	'Enemy',	'Yes'	);
+insert into HarryPotter values(	'Remus Lupin',	'Gryffindor ',	'Faculty',	'Friend',	'Yes'	);
+insert into HarryPotter values(	'Horace Slughorn',	'Slytherin',	'Faculty',	'Friend',	'No'	);
+insert into HarryPotter values(	'Rubeus Hagrid',	'Gryffindor ',	'Faculty',	'Friend',	'No'	);
+insert into HarryPotter values(	'Minerva McGonagall',	'Gryffindor ',	'Faculty',	'Friend',	'No'	);
+insert into HarryPotter values(	'James Potter',	'Gryffindor ',	'Student',	'Family',	'Yes'	);
+insert into HarryPotter values(	'Sirius Black',	'Gryffindor ',	'Student',	'Friend',	'Yes'	);
+insert into HarryPotter values(	'Lily Potter',	'Gryffindor ',	'Student',	'Family',	'Yes'	);
+insert into HarryPotter values(	'Peter Pettigrew',	'Gryffindor ',	'Student',	'Enemy',	'Yes'	);
+insert into HarryPotter values(	'Tom Marvolo Riddle',	'Slytherin',	'Student',	'Enemy',	'Yes'	);

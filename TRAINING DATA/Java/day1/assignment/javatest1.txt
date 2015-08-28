@@ -1,0 +1,38 @@
+abstract class Customer{
+	int custNo;
+	String custName;
+	String adr;
+	int speed;
+	int downloadLimit;
+	int currentUsage;
+	int balanceLeft;
+
+	public void displayDetails(){
+		System.out.println("Customer number: "+custNo);
+		System.out.println();
+		
+	}	
+
+}
+
+class DatacardCustomer extends Customer{
+	int dongleID;
+
+	public void displayDetails(){
+		super.displayDetails();
+		System.out.println();
+		
+	}
+
+
+}
+
+class WirelessCustomer extends Customer{
+	int accesPointID;
+	public void displayDetails(){
+		super.displayDetails();
+		System.out.println();
+		
+	}
+	
+}

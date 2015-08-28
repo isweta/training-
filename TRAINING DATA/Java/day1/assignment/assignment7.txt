@@ -1,0 +1,178 @@
+
+
+----------question1-------------
+disconnect;
+connect scott/tiger;
+set autocommit off;
+
+create table emp9
+(empno number,
+ename varchar2(20),
+sal number(10,2),
+doj date);
+
+insert into emp9
+values
+(1, 'A', 10, '1-JAN-92');
+
+insert into emp9
+values
+(2, 'B', 20, '2-JAN-92');
+
+insert into emp9
+values
+(3, 'C', 30, '3-JAN-92');
+
+select * from emp9;
+
+update emp9
+set sal=(1.15)*sal
+where empno=2;
+
+savepoint sp1;
+
+delete from emp9
+where empno=1;
+
+select * from emp9;
+
+rollback to sp1;
+
+select * from emp9;
+
+
+-------question2----------
+disconnect;
+connect scott/tiger;
+
+
+set autocommit off;
+
+select * from emp where empno=7369;
+
+update emp
+set sal=555 
+where empno=7369;
+
+select sal from emp
+where empno=7369;
+
+savepoint after_update;
+
+delete from emp where empno=7369;
+
+select * from emp where empno=7369;
+
+rollback to after_update;
+
+select * from emp where empno=7369;
+
+select sal from emp where empno=7369;
+
+-------question 3---------
+
+disconnect;
+
+connect system/system;
+
+create user VUSER1 identified by vuser1;
+create user VUSER2 identified by vuser2;
+grant create session to VUSER1;
+grant create session to VUSER2;
+grant create table to VUSER1;
+grant create table to VUSER2;
+
+disconnect;
+connect VUSER1/vuser1;
+
+create table table1
+(empno number);
+
+--------question 4----------
+
+disconnect;
+
+connect system/system
+grant create view to scott;
+
+connect scott/tiger;
+
+create view job_view 
+as
+select job,count(empno) num from emp
+group by job;
+
+select * from job_view;
+
+grant select on job_view to VUSER1;
+
+disconnect;
+
+connect VUSER1/vuser1;
+
+select * from scott.job_view;
+
+------question5-------
+disconnect;
+
+connect system/system;
+
+create user VUSER3 identified by vuser3;
+
+grant create session to VUSER3;
+
+disconnect;
+connect scott/tiger;
+
+
+create view max_min_view 
+as
+select dname, max(sal) max_sal, min(sal) min_sal from
+emp join dept
+on emp.deptno=dept.deptno
+group by dname;
+
+select * from max_min_view;
+
+grant select on max_min_view to VUSER2;
+grant select on max_min_view to VUSER3;
+
+----------------question 6-----------
+create sequence cent_seq
+increment by -1
+start with 100
+maxvalue 100
+nominvalue
+nocycle
+nocache
+order;
+
+create table seq_test
+(testcase number );
+
+insert into seq_test
+values
+(cent_Seq.nextVal);
+
+insert into seq_test
+values
+(cent_Seq.nextVal);
+
+insert into seq_test
+values
+(cent_Seq.nextVal);
+
+insert into seq_test
+values
+(cent_Seq.nextVal);
+
+select * from seq_test;
+
+
+
+
+
+
+
+
+

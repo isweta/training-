@@ -1,0 +1,70 @@
+-----------------------5-2-ques1--------------
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+
+public class Alphabet {
+
+	public static void main(String[] args) throws VowelException, IOException,
+			ExitException {
+		System.out.println("Enter an alphabet in uppercase");
+		BufferedReader buff = new BufferedReader(new InputStreamReader(
+				System.in));
+		char ch = (char) buff.read();
+		if (ch == 'A' || ch == 'E' || ch == 'I' || ch == 'O' || ch == 'U')
+			throw new VowelException();
+		if (ch == 'X')
+			throw new ExitException();
+		System.out.println(ch);
+	}
+
+}
+
+class VowelException extends Exception {
+
+	public VowelException() {
+		super("Vowel Exception");
+	}
+
+}
+
+class ExitException extends Exception {
+	public ExitException() {
+		super("Exit Exception");
+	}
+}
+
+
+
+
+----------------------5-2----ques3-------------------
+package day5;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+
+public class FileReaderWriter {
+
+	public static void main(String[] args) throws IOException {
+		File in = new File(
+				"C:\\Users\\admin\\workspace\\MySample\\src\\day5\\file1.txt");
+		File out = new File(
+				"C:\\Users\\admin\\workspace\\MySample\\src\\day5\\out.txt");
+
+		FileReader fin = new FileReader(in);
+		FileWriter fout = new FileWriter(out);
+		int c;
+		while ((c = fin.read()) != -1) {
+			fout.write(c);
+		}
+
+		fin.close();
+		fout.close();
+
+	}
+	
+}
+

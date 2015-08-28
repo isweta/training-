@@ -1,0 +1,43 @@
+create or replace
+procedure doublelen(n in out int) is
+begin
+n :=n*2;
+end;
+/
+
+declare r int;
+
+begin
+r :=7;
+dbms_output.put_line('before' || R);
+doublelen(r);
+dbms_output.put_line('after' || R);
+end;
+/
+
+declare
+	p product%rowtype;
+	cursor productcurs(pid number) is
+		select * from product where product_id=pid ;
+
+begin
+	--open productcurs(2);
+	for p in productcurs(2) loop
+		dbms_output.put_line('price of ' || p.description || ' is ' || p.price);
+	end loop;
+	--close productcurs;
+end;
+/
+
+
+
+declare
+	name product.description%type;
+	amount product.price%type;
+	
+begin
+	select description, price into name,amount
+		from product where product_id=2;
+	dbms_output.put_line('price of '||name ||'is '|| amount);
+end;
+/

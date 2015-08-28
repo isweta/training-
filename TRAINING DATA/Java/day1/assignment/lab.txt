@@ -1,0 +1,76 @@
+create table BigC
+(item_code number primary key ,
+item_name varchar2(20),
+brand varchar2(10),
+no_of_items number);
+
+create table customers(
+cust_id number primary key,
+cust_name varchar2(10),
+address varchar2(20));
+
+create table item_issues
+(cust_id number,
+item_id number,
+issue_Date date,
+cust_id foreign key fk1 references customers(cust_id),
+item_id foreign key fk2 references BigC(item_code));
+
+
+procedure reduce_item(item_id2 number)
+	is
+	begin
+		update BigC
+		set BigC.item_id=item_id2;
+
+	end reduce_item;
+
+if holi_day=day_mon
+				dbms_output.put_line('matched');
+			else
+				dbms_output.put_line('not matched');
+			end if;
+
+
+
+create or replace trigger restrict_mani
+	before insert or update or delete on emp2
+ 	for each row
+	declare
+		month_i varchar2(3);
+		day_i varchar2(2);
+		day_mon holiday.holiday_date%type;		
+		h holiday%rowtype;
+		holi_day holiday.holiday_date%type;
+		cursor hc is
+			select * from holiday;
+	begin
+		month_i :=to_char(:new.insertion_date, 'MON');
+		day_i :=to_char(:new.insertion_date, 'DD');
+		day_mon := day_i ||'-'|| month_i;
+		dbms_output.put_line('ans ' || day_mon);
+		for h in hc loop
+			holi_day :=h.holiday_date;
+			dbms_output.put_line(holi_day);
+			if holi_day=day_mon then
+				dbms_output.put_line('matched');
+				raise_Application_error(-20007, h.holiday_name);
+			else
+				dbms_output.put_line('not matched');
+			end if;
+		end loop;
+		
+	end;
+/
+
+update emp2
+set salary=20
+where salary=60;
+
+insert into emp2
+values
+(3,'C',300, '15-AUG-2014');
+
+insert into emp2
+values
+(3,'C',300, '26-JAN-2014');

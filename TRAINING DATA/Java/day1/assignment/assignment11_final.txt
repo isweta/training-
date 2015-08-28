@@ -1,0 +1,65 @@
+----------------------ques1---------------------------
+<html>
+	<head>
+		<title>
+			Question1
+		</title>
+		<script type="text/javascript">
+		function AllowAlphabet(){
+			if (!frm.alphabet.value.match(/^[a-zA-Z]+$/) && frm.alphabet.value !="")
+			{
+				frm.alphabet.value="";
+				frm.alphabet.focus();
+				alert("Please Enter only alphabets in name");
+			}
+}
+	</head>
+
+	<body>
+		<form method="post">
+			<table border=2 align="centre">
+				<tr>
+					<td>Name</td>
+					<td><input type="text" onkeyup="AllowAlphabet()">
+/></td>
+				</tr>
+				<tr>
+					<td>Age</td>
+					<td><input type="text"/></td>
+				</tr>
+				<tr>
+					<td>Job</td>
+					<td>
+						<select>
+							<option>Doctor</option>
+							<option>Engineer</option>
+							<option>Teacher</option>
+						</select>
+					</td>
+				</tr>
+				<tr>
+					
+					<td><input type="submit" value="submit"/></td>
+				</tr>
+			</table>
+		</form>
+	</body>
+
+</html>
+
+------------------------question2--------------------------
+<html>
+	<head>
+		<title>
+			Question2
+		</title>
+	</head>
+
+	<body>
+		<ol type=1>
+		<li><img src="C:\Users\Public\Pictures\Sample Pictures\Desert.jpg" width="50" height="50" onclick="document.getElementById('demo').innerHTML ='Desert'" ></li>
+		<li><img src="C:\Users\Public\Pictures\Sample Pictures\Hydrangeas.jpg" width="50" height="50" onclick="document.getElementById('demo').innerHTML ='Hydarengas'"></li>
+		</ol>
+		<p id="demo"></p>
+	</body>
+</html>

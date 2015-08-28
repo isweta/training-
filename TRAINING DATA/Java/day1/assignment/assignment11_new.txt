@@ -1,0 +1,33 @@
+<html>
+	<head>
+		<title>
+			Question1
+		</title>
+	</head>
+
+	<body>
+		<form>
+			<table border=2 align="centre">
+				<tr>
+					<td>Name</td>
+					<td><input type="text"/></td>
+				</tr>
+				<tr>
+					<td>Age</td>
+					<td><input type="text"/></td>
+				</tr>
+				<tr>
+					<td>Job</td>
+					<td>
+						<select>
+							<option>Doctor</option>
+							<option>Engineer</option>
+							<option>Teacher</option>
+						</select>
+					</td>
+				</tr>
+			</table>
+		</form>
+	</body>
+
+</html>

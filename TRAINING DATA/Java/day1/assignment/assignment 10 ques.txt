@@ -1,0 +1,640 @@
+Assignment – Day 10
+
+
+
+
+Time : 90 mins
+
+
+
+
+1.The following table shows a few characters from the Harry Potter series of books.
+
+
+
+
+Name
+ House
+ Role
+ Status
+ Dies
+ 
+Harry Potter
+ Gryffindor 
+ Student
+ Self
+ No
+ 
+Ginny Weasley
+ Gryffindor 
+ Student
+ Friend
+ No
+ 
+Ron Weasley
+ Gryffindor 
+ Student
+ Friend
+ No
+ 
+Hermione Granger
+ Gryffindor 
+ Student
+ Friend
+ No
+ 
+Neville Longbottom
+ Gryffindor 
+ Student
+ Friend
+ No
+ 
+Oliver Wood
+ Gryffindor 
+ Student
+ Friend
+ No
+ 
+Luna Lovegood
+ Ravenclaw
+ Student
+ Friend
+ No
+ 
+Cho Chang
+ Ravenclaw
+ Student
+ Friend
+ No
+ 
+Cedric Diggory
+ Hufflepuff
+ Student
+ Friend
+ Yes
+ 
+Hannah Abbot
+ Hufflepuff
+ Student
+ Friend
+ No
+ 
+Draco Malfoy
+ Slytherin
+ Student
+ Enemy
+ No
+ 
+Vincent Crabbe
+ Slytherin
+ Student
+ Enemy
+ Yes
+ 
+Gregory Goyle
+ Slytherin
+ Student
+ Enemy
+ No
+ 
+Penelope Clearwater
+ Slytherin
+ Student
+ Enemy
+ No
+ 
+Albus Dumbledore
+ Gryffindor 
+ Faculty
+ Friend
+ Yes
+ 
+Severus Snape
+ Slytherin
+ Faculty
+ Enemy
+ Yes
+ 
+Remus Lupin
+ Gryffindor 
+ Faculty
+ Friend
+ Yes
+ 
+Horace Slughorn
+ Slytherin
+ Faculty
+ Friend
+ No
+ 
+Rubeus Hagrid
+ Gryffindor 
+ Faculty
+ Friend
+ No
+ 
+Minerva McGonagall
+ Gryffindor 
+ Faculty
+ Friend
+ No
+ 
+James Potter
+ Gryffindor 
+ Student
+ Family
+ Yes
+ 
+Sirius Black
+ Gryffindor 
+ Student
+ Friend
+ Yes
+ 
+Lily Potter
+ Gryffindor 
+ Student
+ Family
+ Yes
+ 
+Peter Pettigrew
+ Gryffindor 
+ Student
+ Enemy
+ Yes
+ 
+Tom Marvolo Riddle
+ Slytherin
+ Student
+ Enemy
+ Yes
+ 
+
+
+
+
+ 
+
+
+
+
+Status column refers to the status with respect to Harry Potter.
+
+
+
+
+1.Write a function that will create a table and insert these records into the table
+
+2.Write a function that will return the list of names of all characters who belonged to the Gryffindor house
+
+3.Write a function that will return the details of all the characters who are alive, grouped according to their houses
+
+4.Write a function that will return all the details of the family members of Harry Potter
+
+5.Write a function that will return the faculty members who die, sorted by alphabetical order
+
+
+
+
+30 mins 
+
+
+
+
+___________________________________________________
+
+
+
+
+II . The below table has the list of all the Beatles songs in the chronological order:
+
+
+
+
+Year 
+ Single / EP / LP
+  Release Date 
+ 
+1962
+ “Love Me Do / P.S. I Love You”
+ Oct. 5
+ 
+1963
+ “Please Please Me”
+Please Please Me
+“From Me To You / Thank You Girl”
+“She Loves You / I’ll Get You”
+With The Beatles
+“I Want To Hold Your Hand / This Boy”
+ Jan. 11
+Mar. 22
+Apr. 12
+Aug. 23
+Nov. 22
+Nov. 29
+ 
+1964
+ “Can’t Buy Me Love / You Can’t Do That”
+Long Tall Sally / I Call Your Name /
+      Slow Down / Match Box
+A Hard Day’s Night
+“I Feel Fine / She’s A Woman”
+Beatles For Sale
+ Mar. 20
+July 10
+ 
+July 10
+Nov. 27
+Dec. 4
+ 
+1965
+ “Ticket To Ride / Yes It Is”
+“Help! / I’m Down”
+Help!
+“We Can Work It Out / Day Tripper”
+Rubber Soul
+ Apr. 9
+July 23
+Aug. 6
+Dec. 3
+Dec. 3
+ 
+1966
+ “Paperback Writer / Rain”
+“Yellow Submarine”
+Revolver
+ June 10
+Aug. 5
+Aug. 28
+ 
+1967
+ “Strawberry Fields Forever / Penny Lane”
+Sgt. Pepper’s Lonely Hearts Club Band
+“All You Need Is Love / Baby You’re A Rich Man”
+“Hello Goodbye / I Am The Walrus”
+Magical Mystery Tour
+ Feb. 13
+June 1
+July 7
+Nov. 24
+Nov. 27 (U.S.)
+ 
+1968
+ “Lady Madonna / The Inner Light”
+“Hey Jude / Revolution”
+The Beatles (aka The White Album)
+ Mar. 15
+Aug. 30
+Nov. 22
+ 
+1969
+ Yellow Submarine
+“Get Back / Don’t Let Me Down”
+“The Ballad of John and Yoko / Old Brown Shoe”
+Abbey Road
+ Jan. 17
+Apr. 11
+May 3
+Sept. 26
+ 
+1970
+ “Let It Be / You Know My Name (Look Up The #)” 
+“The Long and Winding Road / For You Blue”
+Let It Be
+ Mar. 6
+May 11 (U.S.)
+May 18
+ 
+
+
+
+
+ 
+
+
+
+
+Please note the following:
+
+
+
+
+•Singles are in double quotes
+
+•EP discs (Extended play discs – contains more music than a single, but less than a full album) are in italics
+
+•LP discs (Long playing discs – old vinyl gramophone records that holds full albums) are in bold
+
+
+
+
+Questions:
+
+
+
+
+1.Write a function to create a table and insert the above information into the table (Ensure that the table has adequate columns to hold all of this information)
+
+2.Write a function to get the list of all singles that were released before Thanksgiving day of 1965
+
+3.Write a function to get those items that are both singles and LPs and sort them chronologically
+
+4.Write a function that returns the total number of singles, EPs and LPs created by the Beatles
+
+5.Write a function that will return the number of singles, EPs and LPS created by the Beatles per year
+
+30 mins 
+
+ 
+
+_____________________________________________________
+
+
+
+
+III .
+
+
+
+Trendz It is a startup company. They want to create an Employee Database. The system should have following features:
+
+
+
+
+Employee Table (sample data is given below; you are free to put your own data):
+
+
+
+
+Employee_Id
+ First_Name
+ Last_Name
+ Sur_Name
+ DOJ
+ DOB
+ Qualification
+ Address
+ Contact_Number
+ Designation
+ Role
+ 
+1
+ xxx
+ yyy
+ xxy
+ 10-7-2011
+ 15-02-1986
+ B.Tech
+ abcd
+ +9184454545
+ 2
+ 1
+ 
+2
+ xyz
+ yzx
+ yxv
+ 15-2-2010
+ 21-07-1984
+ M.C.A
+ wewr
+ +9187564523
+ 3
+ 2
+ 
+3
+ bsd
+ tys
+ yuo
+ 16-03-2011
+ 12-12-1982
+ B.Tech
+ wewe
+ +9188564552
+ 2
+ 3
+ 
+
+
+
+
+ 
+
+
+
+
+Designations for organization are maintained in a separate Table. Designations are ‘Associate, Senior Associate, Consultant, Lead Consultant, Senior Consultant, Associate Managing Consultant, Managing Consultant, Principle Consultant, Vice President, Senior Vice president, CEO, Managing Director’. 
+
+
+
+
+Designation Table:
+
+
+
+
+Designation_Id
+ Designation_Name
+ Designation_Description
+ 
+1
+ Associate
+ Associate
+ 
+2
+ Senior Associate
+ Senior Associate
+ 
+3
+ Lead Consultant
+ Lead Consultant
+ 
+4
+ Senior Consultant
+ Senior Consultant
+ 
+5
+ Associate Managing Consultant
+ Associate Managing Consultant
+ 
+6
+ Managing Consultant
+ Managing Consultant
+ 
+7
+ Principle Consultant
+ Principle Consultant
+ 
+8
+ Vice President
+ Vice President
+ 
+9
+ Senior Vice president
+ Senior Vice president
+ 
+10
+ CEO
+ CEO
+ 
+11
+ Managing Director
+ Managing Director
+ 
+
+
+
+
+ 
+
+
+
+
+Roles are maintained in a separate Table. Trendzit Roles are ‘Software Engineer, Senior Software Engineer, Test Engineer, Team Lead, Business Analyst, Technology Specialist, Manager and Senior Manager’.
+
+
+
+
+Role Table
+
+
+
+
+Role_Id
+ Role_Name
+ Role_Description
+ 
+1
+ Software Engineer
+ Software Engineer
+ 
+2
+ Senior Software Engineer
+ Senior Software Engineer
+ 
+3
+ Test Engineer
+ Test Engineer
+ 
+4
+ Team Lead
+ Team Lead
+ 
+5
+ Business Analyst
+ Business Analyst
+ 
+6
+ Technology Specialist 
+ Technology Specialist
+ 
+7
+ Manager
+ Manager
+ 
+8
+ Senior Manager
+ Senior Manager
+ 
+
+
+
+
+ 
+
+
+
+
+1.Write a method, to create a new Employee record with details like ‘First Name, Last Name, Surname, Date of Joining, Date of Birth, Qualification, Address, Contact number, Designation, Experience and Role’. A new sequence number should be generated for each new employee, which will be used as Employee ID.
+
+2.Write a method to update any of the above details for a given employee in Employee Table.
+
+3.Write a method to delete the record (soft delete not hard delete) for a given employee. It means, the data should not be permanently deleted, but with a flag change.
+
+4.Write four different methods to fetch the employee details given Employee’s ID/First Name /Last Name/Surname.
+
+
+
+
+Trendzit also wants to maintain Employee’s skillset in database as defined below.
+
+
+
+
+1.Write two methods to insert/delete each skill with unique id in Skill Table. 
+
+2.Write three methods to insert/update/delete  employee’s skill in Emploee_Skill_Mapping Table
+
+3.Write a method to call a Stored Procedure which will give count of matching employee for a particular skill set.  Input for procedure is Skill id and out put is skill set matching employee count. If no matching employee found, it should give zero count. We should be able to print the matching employee count using System.out.println() in Java method.
+
+
+
+
+Skill Table
+
+
+
+
+Skill_id
+ Skill_Name
+ Skill_Description
+ 
+1
+ Java
+ Java language
+ 
+2
+ .Net
+ .Net language
+ 
+3
+ C
+ C language
+ 
+4
+ C++
+ C++ language
+ 
+5
+ Testing
+ Testing
+ 
+6
+ SQL
+ SQL 
+ 
+
+
+
+
+Emploee_Skill_Mapping Table (sample data is given below; you are free to put your own data)
+
+
+
+
+id
+ Skill_id
+ Employee_id
+ Years of experience
+ 
+1
+ 1
+ 1
+ 2.5
+ 
+2
+ 2
+ 2
+ 3
+ 
+
+
+
+
+ 
+
+
+
+
+30 mins 
+

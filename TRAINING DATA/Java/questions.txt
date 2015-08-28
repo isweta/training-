@@ -1,0 +1,980 @@
+ 
+
+
+1.Write a PL/SQL Program to generate complete payslip of a given employee from EMP table with respect to the following condition
+
+a.HRA  as 10% Of sal
+
+b.DA as  20% of sal
+
+c.PF as 8% of sal
+
+d.IT as 5% of sal
+
+e.Deductions as sum of PF and IT
+
+f.Gross Salary as sum of SAL,HRA,DA and Deductions
+
+g.Net salary as  Gross salary- Deduction
+
+ 
+
+2.Write a PL/SQL Program to Display complete mobile bill of a given customer. (Note: Consider any mobile post paid bill payment report and Cust_Connection  table structure as (Custid,Cname,FromDate ,ToDate,Due Date,Units, Total Amt Due  )
+
+ 
+
+3.Write a PL/SQL Program to find the factorial of a given number.
+
+
+ 
+
+
+1.Create a trigger to restrict data manipulation on EMP table during the holidays. Display the error message like “Due to Independence day you cannot manipulate data”
+
+Note: Create holiday table as (holiday_date, Holiday_name) store atleast 4 holiday details
+
+ 
+
+2.In order to workout with following  packages you need to create tables 
+
+a. BigC (item_code, item_name,Brand , no_of_items)
+
+b. item_issues(cust_id, item_id,issue_date)
+
+c. customers(cust_id,cust_name,address)
+
+                         
+
+create a package and package body  to   
+
+a1. to  add new items into BigC
+
+a2. to  add new customer 
+
+a3. Issue items, once item issued no_of_items must be reduced
+
+
+
+
+
+1.The following table shows a few characters from the Harry Potter series of books.
+
+
+
+
+Name
+ House
+ Role
+ Status
+ Dies
+ 
+Harry Potter
+ Gryffindor 
+ Student
+ Self
+ No
+ 
+Ginny Weasley
+ Gryffindor 
+ Student
+ Friend
+ No
+ 
+Ron Weasley
+ Gryffindor 
+ Student
+ Friend
+ No
+ 
+Hermione Granger
+ Gryffindor 
+ Student
+ Friend
+ No
+ 
+Neville Longbottom
+ Gryffindor 
+ Student
+ Friend
+ No
+ 
+Oliver Wood
+ Gryffindor 
+ Student
+ Friend
+ No
+ 
+Luna Lovegood
+ Ravenclaw
+ Student
+ Friend
+ No
+ 
+Cho Chang
+ Ravenclaw
+ Student
+ Friend
+ No
+ 
+Cedric Diggory
+ Hufflepuff
+ Student
+ Friend
+ Yes
+ 
+Hannah Abbot
+ Hufflepuff
+ Student
+ Friend
+ No
+ 
+Draco Malfoy
+ Slytherin
+ Student
+ Enemy
+ No
+ 
+Vincent Crabbe
+ Slytherin
+ Student
+ Enemy
+ Yes
+ 
+Gregory Goyle
+ Slytherin
+ Student
+ Enemy
+ No
+ 
+Penelope Clearwater
+ Slytherin
+ Student
+ Enemy
+ No
+ 
+Albus Dumbledore
+ Gryffindor 
+ Faculty
+ Friend
+ Yes
+ 
+Severus Snape
+ Slytherin
+ Faculty
+ Enemy
+ Yes
+ 
+Remus Lupin
+ Gryffindor 
+ Faculty
+ Friend
+ Yes
+ 
+Horace Slughorn
+ Slytherin
+ Faculty
+ Friend
+ No
+ 
+Rubeus Hagrid
+ Gryffindor 
+ Faculty
+ Friend
+ No
+ 
+Minerva McGonagall
+ Gryffindor 
+ Faculty
+ Friend
+ No
+ 
+James Potter
+ Gryffindor 
+ Student
+ Family
+ Yes
+ 
+Sirius Black
+ Gryffindor 
+ Student
+ Friend
+ Yes
+ 
+Lily Potter
+ Gryffindor 
+ Student
+ Family
+ Yes
+ 
+Peter Pettigrew
+ Gryffindor 
+ Student
+ Enemy
+ Yes
+ 
+Tom Marvolo Riddle
+ Slytherin
+ Student
+ Enemy
+ Yes
+ 
+
+
+
+
+ 
+
+
+
+
+Status column refers to the status with respect to Harry Potter.
+
+
+
+
+1.Write a function that will create a table and insert these records into the table
+
+2.Write a function that will return the list of names of all characters who belonged to the Gryffindor house
+
+3.Write a function that will return the details of all the characters who are alive, grouped according to their houses
+
+4.Write a function that will return all the details of the family members of Harry Potter
+
+5.Write a function that will return the faculty members who die, sorted by alphabetical order
+
+
+
+
+30 mins 
+
+
+
+
+___________________________________________________
+
+
+
+
+II . The below table has the list of all the Beatles songs in the chronological order:
+
+
+
+
+Year 
+ Single / EP / LP
+  Release Date 
+ 
+1962
+ “Love Me Do / P.S. I Love You”
+ Oct. 5
+ 
+1963
+ “Please Please Me”
+Please Please Me
+“From Me To You / Thank You Girl”
+“She Loves You / I’ll Get You”
+With The Beatles
+“I Want To Hold Your Hand / This Boy”
+ Jan. 11
+Mar. 22
+Apr. 12
+Aug. 23
+Nov. 22
+Nov. 29
+ 
+1964
+ “Can’t Buy Me Love / You Can’t Do That”
+Long Tall Sally / I Call Your Name /
+      Slow Down / Match Box
+A Hard Day’s Night
+“I Feel Fine / She’s A Woman”
+Beatles For Sale
+ Mar. 20
+July 10
+ 
+July 10
+Nov. 27
+Dec. 4
+ 
+1965
+ “Ticket To Ride / Yes It Is”
+“Help! / I’m Down”
+Help!
+“We Can Work It Out / Day Tripper”
+Rubber Soul
+ Apr. 9
+July 23
+Aug. 6
+Dec. 3
+Dec. 3
+ 
+1966
+ “Paperback Writer / Rain”
+“Yellow Submarine”
+Revolver
+ June 10
+Aug. 5
+Aug. 28
+ 
+1967
+ “Strawberry Fields Forever / Penny Lane”
+Sgt. Pepper’s Lonely Hearts Club Band
+“All You Need Is Love / Baby You’re A Rich Man”
+“Hello Goodbye / I Am The Walrus”
+Magical Mystery Tour
+ Feb. 13
+June 1
+July 7
+Nov. 24
+Nov. 27 (U.S.)
+ 
+1968
+ “Lady Madonna / The Inner Light”
+“Hey Jude / Revolution”
+The Beatles (aka The White Album)
+ Mar. 15
+Aug. 30
+Nov. 22
+ 
+1969
+ Yellow Submarine
+“Get Back / Don’t Let Me Down”
+“The Ballad of John and Yoko / Old Brown Shoe”
+Abbey Road
+ Jan. 17
+Apr. 11
+May 3
+Sept. 26
+ 
+1970
+ “Let It Be / You Know My Name (Look Up The #)” 
+“The Long and Winding Road / For You Blue”
+Let It Be
+ Mar. 6
+May 11 (U.S.)
+May 18
+ 
+
+
+
+
+ 
+
+
+
+
+Please note the following:
+
+
+
+
+•Singles are in double quotes
+
+•EP discs (Extended play discs – contains more music than a single, but less than a full album) are in italics
+
+•LP discs (Long playing discs – old vinyl gramophone records that holds full albums) are in bold
+
+
+
+
+Questions:
+
+
+
+
+1.Write a function to create a table and insert the above information into the table (Ensure that the table has adequate columns to hold all of this information)
+
+2.Write a function to get the list of all singles that were released before Thanksgiving day of 1965
+
+3.Write a function to get those items that are both singles and LPs and sort them chronologically
+
+4.Write a function that returns the total number of singles, EPs and LPs created by the Beatles
+
+5.Write a function that will return the number of singles, EPs and LPS created by the Beatles per year
+
+30 mins 
+
+ 
+
+_____________________________________________________
+
+
+
+
+III .
+
+
+
+Trendz It is a startup company. They want to create an Employee Database. The system should have following features:
+
+
+
+
+Employee Table (sample data is given below; you are free to put your own data):
+
+
+
+
+Employee_Id
+ First_Name
+ Last_Name
+ Sur_Name
+ DOJ
+ DOB
+ Qualification
+ Address
+ Contact_Number
+ Designation
+ Role
+ 
+1
+ xxx
+ yyy
+ xxy
+ 10-7-2011
+ 15-02-1986
+ B.Tech
+ abcd
+ +9184454545
+ 2
+ 1
+ 
+2
+ xyz
+ yzx
+ yxv
+ 15-2-2010
+ 21-07-1984
+ M.C.A
+ wewr
+ +9187564523
+ 3
+ 2
+ 
+3
+ bsd
+ tys
+ yuo
+ 16-03-2011
+ 12-12-1982
+ B.Tech
+ wewe
+ +9188564552
+ 2
+ 3
+ 
+
+
+
+
+ 
+
+
+
+
+Designations for organization are maintained in a separate Table. Designations are ‘Associate, Senior Associate, Consultant, Lead Consultant, Senior Consultant, Associate Managing Consultant, Managing Consultant, Principle Consultant, Vice President, Senior Vice president, CEO, Managing Director’. 
+
+
+
+
+Designation Table:
+
+
+
+
+Designation_Id
+ Designation_Name
+ Designation_Description
+ 
+1
+ Associate
+ Associate
+ 
+2
+ Senior Associate
+ Senior Associate
+ 
+3
+ Lead Consultant
+ Lead Consultant
+ 
+4
+ Senior Consultant
+ Senior Consultant
+ 
+5
+ Associate Managing Consultant
+ Associate Managing Consultant
+ 
+6
+ Managing Consultant
+ Managing Consultant
+ 
+7
+ Principle Consultant
+ Principle Consultant
+ 
+8
+ Vice President
+ Vice President
+ 
+9
+ Senior Vice president
+ Senior Vice president
+ 
+10
+ CEO
+ CEO
+ 
+11
+ Managing Director
+ Managing Director
+ 
+
+
+
+
+ 
+
+
+
+
+Roles are maintained in a separate Table. Trendzit Roles are ‘Software Engineer, Senior Software Engineer, Test Engineer, Team Lead, Business Analyst, Technology Specialist, Manager and Senior Manager’.
+
+
+
+
+Role Table
+
+
+
+
+Role_Id
+ Role_Name
+ Role_Description
+ 
+1
+ Software Engineer
+ Software Engineer
+ 
+2
+ Senior Software Engineer
+ Senior Software Engineer
+ 
+3
+ Test Engineer
+ Test Engineer
+ 
+4
+ Team Lead
+ Team Lead
+ 
+5
+ Business Analyst
+ Business Analyst
+ 
+6
+ Technology Specialist 
+ Technology Specialist
+ 
+7
+ Manager
+ Manager
+ 
+8
+ Senior Manager
+ Senior Manager
+ 
+
+
+
+
+ 
+
+
+
+
+1.Write a method, to create a new Employee record with details like ‘First Name, Last Name, Surname, Date of Joining, Date of Birth, Qualification, Address, Contact number, Designation, Experience and Role’. A new sequence number should be generated for each new employee, which will be used as Employee ID.
+
+2.Write a method to update any of the above details for a given employee in Employee Table.
+
+3.Write a method to delete the record (soft delete not hard delete) for a given employee. It means, the data should not be permanently deleted, but with a flag change.
+
+4.Write four different methods to fetch the employee details given Employee’s ID/First Name /Last Name/Surname.
+
+
+
+
+Trendzit also wants to maintain Employee’s skillset in database as defined below.
+
+
+
+
+1.Write two methods to insert/delete each skill with unique id in Skill Table. 
+
+2.Write three methods to insert/update/delete  employee’s skill in Emploee_Skill_Mapping Table
+
+3.Write a method to call a Stored Procedure which will give count of matching employee for a particular skill set.  Input for procedure is Skill id and out put is skill set matching employee count. If no matching employee found, it should give zero count. We should be able to print the matching employee count using System.out.println() in Java method.
+
+
+
+
+Skill Table
+
+
+
+
+Skill_id
+ Skill_Name
+ Skill_Description
+ 
+1
+ Java
+ Java language
+ 
+2
+ .Net
+ .Net language
+ 
+3
+ C
+ C language
+ 
+4
+ C++
+ C++ language
+ 
+5
+ Testing
+ Testing
+ 
+6
+ SQL
+ SQL 
+ 
+
+
+
+
+Emploee_Skill_Mapping Table (sample data is given below; you are free to put your own data)
+
+
+
+
+id
+ Skill_id
+ Employee_id
+ Years of experience
+ 
+1
+ 1
+ 1
+ 2.5
+ 
+2
+ 2
+ 2
+ 3
+ 
+
+
+
+
+ 
+
+
+
+
+30 mins 
+
+
+
+
+Day 11
+
+Assignment – Day 11
+
+
+Time : 90 mins
+
+
+ 
+
+
+ 
+
+
+1). Design HTML form having name, age, job are input fields
+
+
+     a). name must store only alphabets
+
+
+     b). age must be >18
+
+
+     c). job must be selected from dropdown 
+
+
+ 
+
+2). Design HTML form with list of images, once user clicks on image they should get corresponding details of Image.
+
+
+Day 12
+
+
+
+Assignment Day 12
+
+ 
+
+
+Duration 90 Min
+
+
+
+
+
+
+
+1.Following is the code snippet for finding the largest number in an array.
+
+   
+
+public static int find large(int arr[]){  
+
+        int lar=0;  
+
+        for(int i=1;i<arr.length;i++){  
+
+            if(lar<arr[i])  
+
+                lar=arr[i];  
+
+        }  
+
+        return lar;  
+
+ } 
+
+
+
+
+a.Write a test case for the same (hint: will fail for negative numbers)
+
+b.Rectify the error
+
+
+
+
+2.  Write a program called that takes a series of integers from the command-line, stores them in an array.
+
+
+a.Copy them into a new array so that the values are rotated right by one. 
+
+b.Find the median of the array 
+
+c.Write Junit test cases for both 
+
+
+Note: if the array contains an odd number n of elements, the median is the middle element; i.e., the (n+1)/2th element.
+
+if the array contains an even number n of elements, the median is the mean of the two middle elements: i.e., the mean of n/2th and the (n/2)+1th element.
+
+
+
+
+3.  Write a code for solving quadratic equations, given the coefficients’ a, b, c for a standard quadratic equation of type 
+
+
+The roots would be of type   
+
+Please raise exceptions for imaginary values. 
+
+Build a test case for the same & raise exceptions for imaginary values. 
+
+
+
+
+
+Assignment - Day 13
+
+
+Time: 60 mins
+
+
+ 
+
+
+Create a web page with appropriate forms, and servlets, to perform each of the following actions: 
+
+
+1.Form 1: Accepts a string, and display a list (using the ordered list tag OL in HTML) of students whose name contains the given string, showing ID, name, dept_name and tot_creds in a single line.
+
+
+ 
+
+
+2.Form 2: Shows a drop down menu containing the names of all departments (generate this from the database), and when a particular department is selected, a list of all students in the department is displayed (as in the previous question).
+
+
+
+Assignment – Day 14
+
+
+Time 90 mins
+
+
+Case Study : Banking Application
+
+
+ 
+
+
+A staff member can deposit or withdraw cash on behalf of the
+
+
+customer  based on his/her account number. Each of these transactions are stored in the table bankusertransaction.
+
+
+The account_info_table maintains one record which always stores the current/latest balance for
+
+
+that particular account. These details are updated in the appropriate table using the servlet and the
+
+
+model class(AccountOperation) given below.
+
+
+Http being a stateless protocol, when multiple interactions happen between the same customer and
+
+
+the server, the account no which is entered by the staff member in the first form is not available
+
+
+when the deposit/withdrawal information is entered. So the account no. is stored
+
+
+as an attribute in an HttpSession object.
+
+
+ 
+
+
+ 
+
+
+Manager Login :
+
+
+Html and jsp Code for creation of  ‘New Account for Existing Customer’
+
+
+is given in detail: 
+
+
+Manager Login:
+
+
+Code for disabling Customer is given in detail: 
+
+
+Staff Login:
+
+
+•A staff member can deposit or withdraw cash on behalf of the customer based on his/her account number. 
+
+•Each of these transactions are stored in the appropriate table. 
+
+Below code shows the Customer Account Status(mini statement) and
+
+processing of deposit and withdrawing the money.
+
+ 
+
+ 
+
+
+Create  a package for Banking System which  includes Procedures, Functions and Cursors  using the following tables 
+
+
+A .Table Acct_Mast
+
+
+accno    Use primary key and Sequence
+
+
+Cust_name 
+
+
+Act_type 
+
+
+Current _balance
+
+
+Acct_Open_Date
+
+
+ Address  - Use Check Constraint 
+
+
+Phno - Use Check Constraint 
+
+
+Email - Use Check Constraint 
+
+
+ 
+
+
+B. Table  Transact
+
+
+accno   - Use foreign key
+
+
+tranction_ id   - Use primary key   and  sequence
+
+
+tranction _type ( can be deposit or withdraw)
+
+
+Amt
+
+
+Tran_Date
+
+
+1)Create a procedure  for accepting new account using exceptions where ever required to  accept valid  documents like pan card , address proof etc and opening balance >=1000.   
+
+
+2)Create a functions for all transcations
+
+
+            A. Deposits
+
+
+            B. Withdraw
+
+
+            C .New Cheque Book Request 
+
+
+3) Create a Cursor  for  displaying  Account Statements for specific acctno for a date range displaying accno , cust name , transaction date , transaction type , transaction date 
+
+
+20 Marks 
+
+
+-----------------------------------------------------------------------------------------------------
+
+
+4) Write a trigger for transaction table  to restrict any kind of transaction between 4 pm and 8 am displaying appropriate message to the user.
+
+
+10 Marks 
+
+
+

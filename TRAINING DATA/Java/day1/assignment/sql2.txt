@@ -1,0 +1,58 @@
+ create sequence order_number_seq
+ increment by 1
+ start with 1
+ maxvalue 10
+ minvalue 1
+ cycle
+ nocache;
+
+ create sequence order_number_neg_inc_seq
+ increment by -1
+ start with 1
+ maxvalue 1
+ minvalue -10
+ nocycle
+ nocache;
+
+create sequence order_number_2_seq
+ increment by -1
+ start with 1
+ maxvalue 1
+ minvalue -10
+ nocycle
+nocache;
+
+create sequence order_number_3_seq
+ increment by -1
+ start with 1
+ maxvalue 1
+ minvalue -10
+ nocycle
+cache 2;
+
+create synonym myemp for employees
+
+create table empTest
+ (fname varchar2(20) ,
+ lname varchar2(20) ,
+ age int,
+primary key (fname,lname));
+
+
+
+ create table project
+ (projectid varchar2(5),
+ first_name varchar2(20),
+ last_name varchar2(20),
+ foreign key(first_name, last_name) references empTest(fname,lname));
+
+
+
+create view emp_view_2 (eid,fname,sal) as
+select employee_id, first_name, salary from employees
+where salary>3000;
+
+create view emp_view_3 (eid,fname,sal) as
+select employee_id, first_name, salary from employees
+where salary>3000
+with check option;

@@ -1,0 +1,104 @@
+package bean;
+
+public class Employees {
+	 protected String firstName;
+	    protected String lastName;
+	    protected String address;
+		public String getFirstName() {
+			return firstName;
+		}
+		public void setFirstName(String firstName) {
+			this.firstName = firstName;
+		}
+		public String getLastName() {
+			return lastName;
+		}
+		public void setLastName(String lastName) {
+			this.lastName = lastName;
+		}
+		public String getAddress() {
+			return address;
+		}
+		public void setAddress(String address) {
+			this.address = address;
+		}
+}
+
+
+
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+	<form action="JSTLExample.jsp">
+		Fname<input type="text" name="firstName">
+		Lname<input type="text" name="lastName">
+		Address<input type="text" name="address">
+		<input type="submit" >
+	</form>
+</body>
+</html>
+
+
+<%@page isELIgnored="false"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+<h1>Get Value from bean</h1>
+        <jsp:useBean id="emp" class="bean.Employees" scope="session" />
+
+        <jsp:setProperty name="emp" property="*"/>
+        
+        
+        <table>
+            <tr>
+                <td>First Name</td>
+                <td> : </td>
+                <td> ${sessionScope.emp.firstName} </td>
+            </tr>
+            <tr>
+                <td>Last Name</td>
+                <td> : </td>
+                <td> <jsp:getProperty name="emp" property="lastName"/> </td>
+            </tr>
+            <tr>
+                <td>Address</td>
+                <td> : </td>
+                <td> <jsp:getProperty name="emp" property="address"/> </td>
+            </tr>
+        </table>
+
+</body>
+</html>
+
+
+
+
+
+JSTL
+
+
+
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<HTML>
+  <HEAD><TITLE>JSTL Exception Handling</TITLE></HEAD>
+  <BODY>
+
+
+<c:forEach var="i" begin="1" end="5">
+   Item <c:out value="${i}"/><p>
+</c:forEach>
+
+<c:forEach var="item" items="${li}">
+${item}  <br>
+</c:forEach>   
+  
+  
+   </body>
+</html>

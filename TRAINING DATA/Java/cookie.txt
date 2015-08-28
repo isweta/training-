@@ -1,0 +1,109 @@
+public class NewCookieCreatingServlet extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+       
+    /**
+     * @see HttpServlet#HttpServlet()
+     */
+    public NewCookieCreatingServlet() {
+        super();
+        // TODO Auto-generated constructor stub
+    }
+
+	/**
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		String name=request.getParameter("usrname");
+		String passwrd=request.getParameter("pwd");
+		Cookie Mycookie1 = new Cookie("uname",name) ;
+         Mycookie1.setMaxAge(10);        
+         response.addCookie( Mycookie1 ) ;
+         
+         Cookie Mycookie2 = new Cookie("pwd",passwrd) ;
+         Mycookie1.setMaxAge(10);
+         response.addCookie( Mycookie2 ) ;
+         response.setContentType("text/html");
+ 		
+ 		PrintWriter out=response.getWriter();
+ 		out.println("<HTML><BODY>");
+ 		out.println("<h3>Cookie Initialized</h3>");
+ 		out.println("<a href='index.html'>Go back to home page</a>");
+ 		out.println("</BODY></HTML>");
+	}
+
+	/**
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+	}
+
+}
+
+
+
+public class CookieCheckingServlet extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+       
+    /**
+     * @see HttpServlet#HttpServlet()
+     */
+    public CookieCheckingServlet() {
+        super();
+        // TODO Auto-generated constructor stub
+    }
+
+	/**
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	//	HttpSession hs1= request.getSession();
+	//	HttpSession hs1= request.getSession(true);
+		
+		//to check user in session
+		HttpSession hs2= request.getSession(false);
+		if(hs2==null||hs2.getAttribute("username")==null)
+					response.sendRedirect("login.html");
+
+		
+		//logout
+		if(hs2!=null)
+		hs2.invalidate();
+		
+		
+		
+		
+		
+		Cookie [] cookie = request.getCookies();
+		 if(cookie==null)
+			response.sendRedirect("index.html");
+         Cookie userNameCookie = null ;
+         Cookie passwordCookie=null;
+         String username=null;
+         String password=null;
+         for(int  i = 0; i < cookie.length; i++ ){
+         if( cookie[i].getName().equals("uname") ){
+        	 userNameCookie = cookie[i] ;
+         }else if( cookie[i].getName().equals("pwd") ){
+             passwordCookie = cookie[i] ;
+         }
+         
+         }//end of for
+          if(userNameCookie!=null&&passwordCookie!=null)  {    
+         username = userNameCookie.getValue() ;
+         password = passwordCookie.getValue();
+         
+         if(username.equals("M9004099")&&password.equals("Welcome123"))
+        		 response.sendRedirect("Success.html");
+         else
+        	 response.sendRedirect("Failure.html");
+         }
+          
+          else{
+        	  PrintWriter out=response.getWriter();
+        	  out.println("<HTML><BODY>");
+        	  out.println("<h3>Cookie Expired</h3>");
+        	  out.println("<a href='index.html'>Go back to home page</a>");
+        	  out.println("</BODY></HTML>");
+          }
+	}

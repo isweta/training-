@@ -1,0 +1,53 @@
+select salary from employees where first_name='Neena';
+
+select first_name, last_name, salary from employees where salary>
+(select salary from employees where first_name='Neena');
+
+select first_name, last_name, salary from employees where salary=
+(select salary from employees where first_name='Neena');
+
+
+select first_name, last_name, salary from employees 
+where 
+salary=(select salary from employees where first_name='Neena')
+and
+first_name<>'Neena';
+
+salary same as peter
+
+select salary from employees where first_name='Peter';
+
+select first_name, last_name, salary from employees 
+where 
+salary=(select salary from employees where first_name='Peter');//error
+
+select first_name, last_name, salary from employees 
+where 
+salary in(select salary from employees where first_name='Peter');
+
+//salary more than peter
+select first_name, last_name, salary from employees 
+where 
+salary>all(select salary from employees where first_name='Peter');
+
+
+//department wise max salary
+select department_id,max(salary) from employees 
+group by department_id;
+
+select department_id,max(salary) from employees 
+group by department_id;
+
+select first_name, department_id,salary from employees
+where salary in (select max(salary) from employees group by department_id);
+
+select department_id ,salary, first_name from employees e
+where salary in (select max(salary) from employees where department_id=e.department_id)
+order by department_id;
+
+--------------questions-----------------------
+
+
+
+
+
